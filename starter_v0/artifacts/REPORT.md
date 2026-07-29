@@ -6,9 +6,13 @@
 
 ## Team
 
-- Team: TrongDung-01965
-- Members: Trần Tuấn Trung (Tool Developer), Nguyễn Trọng Dũng (Eval Architect), Chu Thị Yến Khanh (Prompt Engineer), Vũ Quang Tùng (UI Developer), Mai Việt Anh (DevOps & Báo cáo)
-- Provider/model: OpenRouter / openai
+| STT | Họ và tên | Mã học viên | Vai trò trong nhóm |
+|-----|-----------|-------------|--------------------|
+| 1   |  Mai Việt Anh  |     2A202601083      |      Thành viên            |
+| 2   |  Trần Tuấn Trung  |     2A202601769     |      Thành viên            |
+| 3   |  Nguyễn Trọng Dũng   |     2A202601965      |      Nhóm trưởng            |
+| 4   |  Vũ Quang Tùng  |     2A202601545      |      Thành viên           |
+| 5   |  Chu Thị Yến Khanh  |     2A202601739      |      Thành viên           |
 
 ---
 
