@@ -307,7 +307,7 @@ st.markdown("""
 # PAGE: LIVE CHAT
 # ═══════════════════════════════════════════════════════
 if page == "💬 Live Chat":
-    col_chat, col_info = st.columns([3, 1])
+    col_chat, col_trace, col_info = st.columns([2.5, 1.5, 1])
 
     with col_info:
         st.markdown('<div class="section-header">⚡ Quick Scenarios</div>', unsafe_allow_html=True)
@@ -345,6 +345,46 @@ if page == "💬 Live Chat":
         for tname, tdesc in tools_info:
             st.markdown(f'<span class="version-badge">{tname}</span>', unsafe_allow_html=True)
 
+    with col_trace:
+        st.markdown('<div class="section-header">🔬 Tool Execution Trace</div>', unsafe_allow_html=True)
+        last_events = st.session_state.get("last_tool_events", [])
+        if not last_events:
+            st.info("Chưa có lượt gọi tool nào trong câu hỏi gần nhất hoặc lịch sử trống.")
+        else:
+            st.markdown(f"Đã gọi **{len(last_events)}** tool(s) ở lượt chạy cuối:")
+            for idx, ev in enumerate(last_events):
+                name = ev.get("tool", "?")
+                args = ev.get("args", {})
+                result = ev.get("result", {})
+                
+                # Check for error
+                is_err = False
+                err_msg = ""
+                if isinstance(result, dict):
+                    if "error" in result and result.get("error"):
+                        is_err = True
+                        err_msg = f"{result.get('error')}: {result.get('message', '')}"
+                    elif isinstance(result.get("result"), dict) and result.get("result", {}).get("error"):
+                        is_err = True
+                        res_err = result.get("result", {})
+                        err_msg = f"{res_err.get('error')}: {res_err.get('message', '')}"
+                
+                status_emoji = "❌" if is_err else "✅"
+                
+                # Header
+                st.markdown(f"**Step {idx+1}:** {status_emoji} `{name}`")
+                
+                # Container with details
+                with st.container():
+                    st.caption("📥 Input Arguments")
+                    st.json(args)
+                    st.caption("📤 Output Result")
+                    if is_err:
+                        st.error(err_msg)
+                    else:
+                        st.json(result)
+                st.markdown("---")
+
     with col_chat:
         # Init state
         if "chat_messages" not in st.session_state:
@@ -355,6 +395,8 @@ if page == "💬 Live Chat":
             st.session_state.agent_ready = False
         if "pending_input" not in st.session_state:
             st.session_state.pending_input = ""
+        if "last_tool_events" not in st.session_state:
+            st.session_state.last_tool_events = []
 
         # Display messages
         chat_container = st.container()
@@ -460,6 +502,7 @@ if page == "💬 Live Chat":
                         "content": assistant_text,
                         "tool_calls": display_tools,
                     })
+                    st.session_state.last_tool_events = tool_events
 
                     # Update history
                     st.session_state.chat_history.append({"role": "user", "content": user_input})
@@ -471,12 +514,14 @@ if page == "💬 Live Chat":
                         "content": f"❌ Lỗi: {type(e).__name__}: {e}",
                         "tool_calls": [],
                     })
+                    st.session_state.last_tool_events = []
 
             st.rerun()
 
         if st.button("🗑️ Xoá chat", key="clear_chat"):
             st.session_state.chat_messages = []
             st.session_state.chat_history = []
+            st.session_state.last_tool_events = []
             st.rerun()
 
 # ═══════════════════════════════════════════════════════
