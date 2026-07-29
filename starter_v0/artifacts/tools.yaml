@@ -7,7 +7,7 @@ tools:
         question: {type: string, default: "", description: "Question to ask the user"}
         response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Use yes_no for send/post/publish confirmation; use text for missing URL, account, handle, or content."}
         options: {type: array, default: [], items: {type: string}, description: "Choices when response_type is choice"}
-      required: [question]
+      required: [question, response_type]
 
   - name: timeline
     description: "Get recent posts/tweets from a specific account handle. Use for requests about one person's posts."
