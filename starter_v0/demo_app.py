@@ -275,7 +275,7 @@ def format_tool_calls(tool_events: list[dict]) -> str:
 # ─── Sidebar ──────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("### ⚙️ Cấu hình")
-    provider_name = st.selectbox("Provider", ["openrouter", "openai", "gemini", "anthropic"], index=0)
+    provider_name = st.selectbox("Provider", ["openrouter", "openai", "gemini", "anthropic"], index=1)
     version_label = st.text_input("Version label", value="v6")
     st.markdown("---")
     st.markdown("### 🗂️ Navigation")
