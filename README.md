@@ -1,5 +1,17 @@
 # Day 04 Lab v2 — Research Agent Tool Eval
 
+## Bảng Phân Công Công Việc (Nhóm 5 Thành Viên)
+
+| Thành viên | Vai trò | Các file sửa đổi / tạo mới | Nhiệm vụ chính |
+| :--- | :--- | :--- | :--- |
+| **Trần Tuấn Trung** | **Tool Developer** | <ul><li>`tools/new_tool/`</li><li>`tools/__init__.py`</li><li>`artifacts/tools.yaml`</li></ul> | Phát triển các tool mới tự chọn (để nhận điểm bonus). |
+| **Nguyễn Trọng Dũng** | **Eval Architect** | <ul><li>`data/eval_group.json`</li></ul> | Xây dựng 10 test case (5 single-turn, 5 multi-turn) đánh giá Agent. |
+| **Chu Thị Yến Khanh** | **Prompt Engineer** | <ul><li>`artifacts/system_prompt.md`</li><li>`artifacts/version_log.csv`</li></ul> | Tối ưu prompt hệ thống qua các version `v1`, `v2`, `v3`. |
+| **Vũ Quang Tùng** | **UI Developer** | <ul><li>`starter_v0/app.py`</li><li>`starter_v0/requirements.txt`</li></ul> | Thiết kế giao diện chat & hiển thị tool execution trace (Streamlit). |
+| **Mai Việt Anh** | **DevOps & Báo cáo** | <ul><li>`artifacts/REPORT.md`</li></ul> | Chạy baseline `v0`, cấu hình Cloudflare Tunnel và viết report nhóm. |
+
+---
+
 ## Brief
 
 Trong lab này, nhóm build một research agent nhỏ nhưng chạy thật. Agent nhận request của user, chọn tool, truyền arguments, chạy tool thật, lưu full JSON log, rồi dùng log đó để tối ưu prompt/tool declaration qua nhiều version.
