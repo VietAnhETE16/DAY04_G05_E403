@@ -1,134 +1,149 @@
 # Day 04 Lab v2 Report — Research Agent
 
+> File này gồm 2 phần, deadline khác nhau:
+> - **PHẦN A — Giới thiệu agent**: ngắn gọn 1 trang để team khác hiểu nhanh agent có tool gì, làm được gì, thử bằng câu hỏi nào. Xong trước 11:30 để làm tài liệu phụ trợ khi demo.
+> - **PHẦN B — Chi tiết / Bằng chứng**: bảng đầy đủ (v0–v3, failure, eval, chat) dựa trên log thật. Có thể hoàn thiện sau buổi debate để nộp bài.
+
 ## Team
 
-- Team: G05
-- Members: Trần Tuấn Trung, Nguyễn Trọng Dũng, Chu Thị Yến Khanh, Vũ Quang Tùng, Mai Việt Anh
-- Provider/model: OpenAI / gpt-4o-mini
+- Team: TrongDung-01965
+- Members: (Do nhóm tự điền)
+- Provider/model: OpenRouter / gemini-2.5-flash
 
 ---
 
-# PHẦN A — Debate Poster
+# PHẦN A — Giới thiệu agent
 
-## A1. Một dòng tóm tắt
+## A1. Agent này làm được gì
 
-Tối ưu hóa system prompt định tuyến tool, bắt buộc xác nhận xác thực (yes_no) trước khi thực hiện hành động ghi (send), đưa case_accuracy từ 0.90 lên 0.95 (tại v1/v3).
+> 1–2 câu mô tả agent dùng để làm gì.
 
-## A2. Kết quả (baseline → final)
+Ví dụ: "Research agent: tìm tin theo từ khóa / theo tài khoản, đọc URL, tổng hợp thành digest, lấy tài liệu nội bộ, tìm bài báo arXiv và gửi xác nhận an toàn trước khi đăng."
 
-| Metric | Baseline (v0) | Final (v3) | Δ |
-|---|---:|---:|---:|
-| case_accuracy | 0.9000 | 0.9000 | 0.0000 |
-| tool_routing_accuracy | 0.9500 | 0.9500 | 0.0000 |
-| argument_accuracy | 0.9000 | 0.9000 | 0.0000 |
-| multiturn_accuracy | 0.8333 | 0.8333 | 0.0000 |
+**Link dùng thử (truy cập được trong showdown):**
 
-*Chú ý: Phiên bản v1 đạt hiệu năng cao nhất (0.95) nhưng phiên bản v2 & v3 gặp vấn đề không tương thích về mặt line endings/nondeterminism trên môi trường thử nghiệm.*
+> Dán public URL nếu người khác cần mở từ máy riêng; localhost cũng được nếu demo trực tiếp trên máy trình chiếu. Streamlit được khuyến nghị, nhưng nhóm có thể dùng bất kỳ framework nào.
+>
+> URL: http://localhost:8501 (TBD)
 
-- Run file baseline: `runs/v0_B_base_openai_20260729T112659707849.json`
-- Run file final: `runs/v3_B_base_openai_20260729T120406963429.json`
+## A2. Tool agent có
 
-## A3. Ba thay đổi quan trọng nhất
+> Liệt kê các tool agent đang dùng. Mỗi tool 1 dòng: tên + làm được gì.
 
-| # | Lỗi quan sát trong log | Sửa ở đâu (`prompt`/`tools.yaml`) | Kết quả (case nào pass thêm) |
+| Tên tool | Làm được gì | Tool mới nhóm thêm? |
+|---|---|---|
+| clarify | hỏi lại người dùng khi thiếu thông tin (URL, handle) hoặc xác nhận yes/no | không |
+| timeline | lấy các bài đăng gần đây của một user cụ thể | không |
+| social_search | tìm kiếm từ khoá hoặc trend trên mạng xã hội | không |
+| lookup | tra cứu tin tức hoặc thông tin trên internet | không |
+| fetch | đọc toàn bộ nội dung từ một trang web | không |
+| format | trình bày dữ liệu theo các template chuyên biệt | không |
+| send | gửi hoặc đăng một bài viết (bắt buộc qua confirm) | không |
+| policy | tìm kiếm thông tin trong tài liệu/chính sách nội bộ | có |
+| papers | tìm kiếm thông tin các bài báo khoa học | có |
+| paper_text | tải text toàn phần của bài báo trên arXiv | có |
+
+## A3. Câu hỏi mẫu để thử
+
+> 3–5 câu hỏi/yêu cầu mẫu để team khác tự thử agent ngay.
+
+1. "Có tin tức gì nổi bật về AI hôm nay không?"
+2. "Đăng bản tin này lên Telegram giúp mình."
+3. "Tìm giúp tôi các bài báo khoa học mới nhất về reinforcement learning from human feedback (RLHF)."
+4. "Chính sách nội bộ của công ty về quyền riêng tư dữ liệu (data privacy) là gì?"
+
+## A4. Kịch bản demo đã rehearse
+
+> Chuẩn bị 3–5 scenario. Mỗi scenario cần cho thấy tool đã làm gì và một thay đổi cụ thể giữa các version.
+
+| Scenario | Tool trace cần thấy | Câu chuyện cải thiện version | Fallback run/transcript |
 |---|---|---|---|
-| 1 | `M06_switch_tool` gọi thừa `social_search` khi người dùng yêu cầu bỏ Twitter | `prompt` (Thêm quy tắc Multi-turn: bỏ nguồn cũ khi chuyển nguồn) | `M06_switch_tool` PASS ở v1 |
-| 2 | `R12_confirm_before_send` gọi `clarify` trả về `response_type="text"` thay vì `yes_no` | `tools.yaml` (Đặt `response_type` thành required) | Thử nghiệm định hướng dữ liệu đầu ra |
-| 3 | `R12` gọi nhầm `response_type="text"` do thiếu nội dung (bản tin này) | `prompt` (Ép kiểu xác nhận `yes_no` bất kể thiếu nội dung) | Tránh rò rỉ hành động gửi tin tự động |
-
-## A4. Tool mới nhóm tự thêm
-
-| Tên tool | Tool làm gì | Vì sao cần (lỗi/khoảng trống nào) | Args chính | Có confirmation? |
-|---|---|---|---|---|
-| new_tool | Phân tích local note/text | Đáp ứng nhu cầu phân tích và tóm tắt văn bản không có trên mạng | `text`, `focus`, `max_items` | Không |
-
-- File tool: `tools/new_tool/tool.py` + `tools/new_tool/TOOL.md`
-- Đã đăng ký ở: `tools/__init__.py` [x]  `tools.yaml` [x]
-
-## A5. Một bằng chứng before/after (để cãi)
-
-- Case ID: `M06_switch_tool`
-- Request: "Mọi người nói gì về OpenAI trên Twitter?" -> "Bỏ Twitter, chuyển sang tìm trên web tin tức đi" -> "Giữ chủ đề OpenAI"
-
-**Trước (v0):**
-```json
-actual_tool_calls: [
-  {"name": "lookup", "args": {"query": "OpenAI", "topic": "news"}},
-  {"name": "social_search", "args": {"query": "OpenAI", "search_type": "Top"}}
-]
-observed_mismatch: extra_tool_call
-```
-
-**Sau (v1):**
-```json
-actual_tool_calls: [
-  {"name": "lookup", "args": {"query": "OpenAI", "topic": "news"}}
-]
-```
+| Thiếu URL khi tóm tắt | `clarify(response_type="text")` | Ban đầu LLM tự đoán URL sai, sau v2 được dạy phải hỏi lại. | `transcripts/*.transcript.json` |
+| Yêu cầu gửi mà thiếu text | `clarify(response_type="yes_no")` | LLM hay nhầm hỏi text thay vì yes_no. Khắc phục ở v5 nhờ ưu tiên tối thượng. | `runs/v5_B_base_openrouter_...json` |
+| Bỏ tool cũ, gọi tool mới | `lookup` (chỉ gọi 1) | LLM hay gọi song song thừa tool (M06). Đã được triệt tiêu ở v6 nhờ dạy tư duy ranh giới. | `runs/v6_B_group_openrouter_...json` |
+| Phân biệt thuật ngữ | `social_search` vs `papers` | LLM nhầm "bài viết" với "bài báo". Khắc phục ở v6 bằng định nghĩa context. | `runs/v6_B_group_openrouter_...json` |
 
 ---
 
 # PHẦN B — Chi tiết / Bằng chứng
 
-## B1. Version Evidence
+> Điều kiện metric hợp lệ: `provider_error_cases` phải bằng `0`; `measured_cases` phải bằng `total_cases`; và bất kỳ `tool_results` nào có error đều phải được review thủ công vì routing PASS không chứng minh tool execution đã đúng.
 
-| Version | Changed Artifact | Hypothesis | Metric Before | Metric After | Run File |
-|---|---|---|---:|---:|---|
-| v0 | N/A | Initial baseline run | 0 | 0.9 | [v0_B_base_openai_20260729T112659707849.json](file:///C:/Users/VIET%20ANH/Desktop/DAY04_G05_E403/starter_v0/runs/v0_B_base_openai_20260729T112659707849.json) |
-| v1 | system_prompt.md | Prompt LLM to drop unused tool | 0.9 | 0.95 | [v1_B_base_openai_20260729T113202013369.json](file:///C:/Users/VIET%20ANH/Desktop/DAY04_G05_E403/starter_v0/runs/v1_B_base_openai_20260729T113202013369.json) |
-| v2 | tools.yaml | Make response_type required to force output | 0.95 | 0.9 | [v2_B_base_openai_20260729T120954984227.json](file:///C:/Users/VIET%20ANH/Desktop/DAY04_G05_E403/starter_v0/runs/v2_B_base_openai_20260729T120954984227.json) |
-| v3 | system_prompt.md | Always use yes_no confirmation first for send/post/publish/broadcast requests, even when content is missing | 0.9 | 0.9 | [v3_B_base_openai_20260729T120406963429.json](file:///C:/Users/VIET%20ANH/Desktop/DAY04_G05_E403/starter_v0/runs/v3_B_base_openai_20260729T120406963429.json) |
+## B1. Version evidence
 
-## B2. Failure Analysis
+Fill from `artifacts/version_log.csv` and `runs/*.json`.
+
+| Version | Prompt/tool change | Hypothesis | Metric name | Before | After | Run File |
+|---|---|---|---|---:|---:|---|
+| v0 | baseline |  | case_accuracy |  | 0.65 | runs/v0_B_base_...json |
+| v1 | Thêm luật xử lý missing_info và out_of_scope vào system_prompt | LLM cần lệnh rõ ràng để không đoán mò URL/Handle | case_accuracy | 0.65 | 0.85 | runs/v1_B_base_...json |
+| v2 | Sửa mô tả param response_type trong tools.yaml | Dòng mô tả rõ "yes_no" và "text" sẽ điều hướng LLM | case_accuracy | 0.85 | 0.90 | runs/v2_B_base_...json |
+| v3 | Chặn extra tool khi user "switch" và force "yes_no" | Mệnh đề rõ ràng về việc huỷ tool cũ sẽ tránh gọi thừa (M06) | case_accuracy | 0.90 | 0.95 | runs/v3_B_base_...json |
+| v4 | Đặt response_type thành required trong tools.yaml | Nếu thiếu required, LLM có thể ỷ lại default | case_accuracy | 0.95 | 0.95 | runs/v4_B_base_...json |
+| v5 | Thêm "highest precedence" cho yes_no vào prompt | Ngay cả khi thiếu text, luật yes_no phải đè lên luật missing_info (R12) | case_accuracy | 0.95 | 1.00 | runs/v5_B_base_...json |
+| v6 | Cấu trúc lại toàn bộ system_prompt theo nguyên lý | Tư duy luận lý sẽ giải quyết được case group (G07, G10) thay vì vá lỗi | case_accuracy | 0.80 | 1.00 | runs/v6_B_group_...json |
+
+## B2. Failure analysis
+
+Use actual failures from `results[*].result.failures`.
 
 | Case ID | Failure Type | Actual Tool Calls | What Failed | Fix |
 |---|---|---|---|---|
-| R12_confirm_before_send | wrong_boundary | `[{'name': 'clarify', 'args': {'question': 'Bạn có thể cung cấp nội dung bản tin mà bạn muốn đăng lên Telegram không?', 'response_type': 'text'}}]` | response_type: expected 'yes_no', got 'text' | Cần cập nhật mô tả tham số `response_type` trong `tools.yaml` để tránh mâu thuẫn với system prompt |
-| M06_switch_tool | wrong_tool | `[{'name': 'lookup', 'args': {'query': 'OpenAI', 'topic': 'news', 'timeframe': 'week', 'max_results': 5}}, {'name': 'social_search', 'args': {'query': 'OpenAI', 'search_type': 'Top', 'limit': 5}}]` | extra tool call social_search | Điều chỉnh độ nhạy của system prompt khi xử lý lệnh phủ định (negation) |
+| R11_missing_url | missing_info | clarify(None) | Thiếu argument response_type="text" do LLM ỷ vào mặc định | Đặt required trong tools.yaml và cập nhật mô tả (v2, v4) |
+| R12_confirm_before_send | wrong_boundary | clarify("text") | Hỏi xin "text" do nội dung bản tin rỗng thay vì xác nhận "yes_no" | Thêm luật "highest precedence" cho ranh giới confirm (v5) |
+| M06_switch_tool | wrong_tool | lookup, social_search | Gọi dư tool cũ do luật Parallel Tools kích hoạt | Dạy LLM xoá tool cũ nếu user đòi "switch" (v3, v6) |
+| G07_multi_send_after_confirmation | wrong_boundary | clarify("yes_no") | Hỏi yes_no lần 2 dù user đã bảo "Có, gửi luôn đi" | Thêm Exception cho Confirmation Boundary nếu user đã confirm (v6) |
+| G10_multi_social_search_top_limit | wrong_arg_value | papers | Bị lừa bởi chữ "bài viết" nên gọi papers thay vì social_search | Giải thích rõ "bài viết MXH" khác "bài báo khoa học" (v6) |
 
-## B3. Team Eval Cases
+## B3. Team eval cases
+
+List the 10 cases added to `data/eval_group.json`:
+
+- 5 single-turn
+- 5 multi-turn
 
 | Case ID | What It Tests | Expected Tool/Behavior | Result |
 |---|---|---|---|
-| G01_single_notes_analysis | Phân tích văn bản ghi chú cục bộ bằng `new_tool` | `new_tool(text=..., max_items=3)` | PASS |
-| G02_single_notes_focus | Truyền tham số focus là 'AI' cho công cụ phân tích cục bộ | `new_tool(text=..., focus="AI")` | PASS |
-| G03_single_math_homework | Từ chối gọi tool cho câu hỏi toán học ngoài phạm vi | `no_tool` | PASS |
-| G04_single_missing_notes_text | Yêu cầu nhập URL khi bị thiếu ở yêu cầu fetch | `clarify(response_type="text")` | PASS |
-| G05_single_confirm_before_publish | Xác nhận yes_no trước khi gửi tin | `clarify(response_type="yes_no")` | PASS |
-| G06_multi_switch_source | Chuyển đổi nguồn tìm kiếm từ Twitter sang web và bỏ Twitter | `lookup(query="OpenAI", topic="news")` | PASS |
-| G07_multi_carryover_focus | Giữ lại text và focus từ lượt trước, cập nhật max_items | `new_tool(text=..., focus="tuyển dụng", max_items=3)` | PASS |
-| G08_multi_carryover_query | Mang query OpenAI sang lượt sau và giới hạn kết quả | `papers(query="OpenAI", max_results=3)` | PASS |
-| G09_multi_out_of_scope | Yêu cầu code ở lượt sau bị từ chối gọi tool | `no_tool` | PASS |
-| G10_multi_correction_topic | Đổi chủ đề từ Nvidia sang AMD | `lookup(query="AMD", topic="news")` | PASS |
+| G01_single_papers_search | Chọn tool papers khi hỏi báo cáo khoa học | `papers` | PASS |
+| G02_single_lookup_news_today | Xử lý args cho web search (hôm nay -> day, tin -> news) | `lookup` | PASS |
+| G03_single_timeline_elonmusk | Map tên thật ra handle và điều chỉnh limit | `timeline` | PASS |
+| G04_single_policy_data_privacy | Tra policy nội bộ công ty thay vì web | `policy` | PASS |
+| G05_single_out_of_scope_booking | Phát hiện yêu cầu đặt vé máy bay là ngoài vùng | `no_tool` | PASS |
+| G06_multi_missing_info_fetch | Yêu cầu fetch web nhưng không có URL | `clarify(text)` | PASS |
+| G07_multi_send_after_confirmation | Không hỏi lại yes_no nếu user đã nói "Có gửi đi" | `send(confirmed=true)` | PASS |
+| G08_multi_unnecessary_tool_capabilities | Huỷ task và hỏi năng lực -> không gọi tool | `no_tool` | PASS |
+| G09_multi_paper_text_specific_url | Lấy text của bài arXiv theo URL user cho ở turn 2 | `paper_text` | PASS |
+| G10_multi_social_search_top_limit | Lấy top 5 thảo luận MXH (không phải bài báo) | `social_search` | PASS |
 
-## B4. Live Chat Evidence
+## B4. Live chat evidence
 
-| Turn | User Request | Tool Calls | Version Evidence | Outcome |
+Use `transcripts/*.transcript.json`.
+
+| Scenario/Turn | Version | Tool Calls + Args | Transcript/Run | Outcome |
 |---|---|---|---|---|
-| Turn 1 | Hãy tìm kiếm tin tức về OpenAI trên web giúp mình. | `lookup({"query": "OpenAI", "topic": "news"})` | v3_openai_20260729T122357443074.transcript.json | answered |
-| Turn 2 | Hãy đọc nội dung bài viết này | `fetch({"url": "https://www.businessinsider.com/..."})` | v3_openai_20260729T122357443074.transcript.json | answered |
-| Turn 3 | URL là https://openai.com/blog | `fetch({"url": "https://openai.com/blog"})` | v3_openai_20260729T122357443074.transcript.json | answered |
-| Turn 4 | Gửi thông báo 'Chào buổi sáng' lên Telegram | `clarify({"question": "...", "response_type": "yes_no"})` | v3_openai_20260729T122357443074.transcript.json | waiting_for_user |
-| Turn 5 | Có | `send({"confirmed": true, "text": "Chào buổi sáng"})` | v3_openai_20260729T122357443074.transcript.json | answered |
+| Hỏi tin tức thường | v6 | `lookup(query="AI", topic="news")` | `transcripts/v6_openrouter_20260729T111503975452.transcript.json` | Agent tra cứu thành công |
+| Đọc web từ context | v6 | `fetch(url="...")` | `transcripts/v6_openrouter_20260729T111503975452.transcript.json` | Tự động refer URL từ câu trước để tóm tắt |
+| Action nhạy cảm (Send) | v6 | `clarify(yes_no)` rồi `send` | `transcripts/v6_openrouter_20260729T111503975452.transcript.json` | Agent chặn lại, hỏi ý kiến, nhận 'Có', gọi send |
 
-## B5. Bonus Evidence
+## B5. Tool capability evidence
+
+Phân loại rõ tool mới bắt buộc, optional built-in và tool đủ điều kiện bonus. Chỉ ghi Telegram/pseudocode nếu nhóm thực sự dùng; base report không cần chúng.
+
+UI is core deliverable, not bonus. Do not list it here.
 
 | Category | Evidence File | What Worked | Risk / Guardrail |
 |---|---|---|---|
-| Must-have: tool mới đầu tiên | `tools/new_tool/tool.py` | Phân tích local text và note trích xuất summary, action items, keywords, thống kê số chữ/dòng | Không có tác động ngoài hệ thống, an toàn tuyệt đối |
-| Optional built-in | `tools/papers/tool.py`, `tools/policy/tool.py` | Tra cứu tài liệu chính sách nội bộ và bài báo arXiv | Phụ thuộc vào kết nối mạng bên ngoài |
-| UI | `app.py` | Giao diện Streamlit hiển thị chat trực quan, hiển thị chi tiết lịch sử cuộc gọi tool (trace) qua từng round và thông tin version | Chạy local, cần Cloudflare Tunnel để chia sẻ ra ngoài |
+| Must-have: tool mới đầu tiên | `eval_group.json` (G01) | `papers` hoạt động trơn tru. | Có thể lấy nhầm URL nếu arXiv thay đổi |
+| Optional built-in | `eval_group.json` (G04) | `policy` quét tài liệu AI thành công. | Dễ nhầm với `lookup` web |
+| Bonus: tool mới thứ 4 trở đi | `eval_group.json` (G09) | `paper_text` lấy được raw text. | Lỗi chunking nếu bài báo quá dài |
 
 ## B6. Reflection
 
 - **Which fixes belonged in `system_prompt.md`?**
-  - Các quy tắc về phân tách logic chuyển đổi giữa các turn (Multi-turn switch tool).
-  - Quy tắc ưu tiên bắt buộc xác thực trước hành động gửi dữ liệu (yes_no confirmation).
+  Các luật có tính logic, tư duy trừu tượng, phân biệt ngữ cảnh (contextual disambiguation), và xử lý đa bước (multi-turn cancellation). LLM cần đọc hiểu những rule này mới hiểu được "vì sao" phải làm vậy.
 - **Which fixes belonged in `tools.yaml`?**
-  - Khai báo bắt buộc (`required`) cho các tham số cốt lõi.
-  - Sửa đổi mô tả tham số rõ ràng để định hướng LLM chọn đúng type.
+  Các ràng buộc cứng về dữ liệu (schema), ví dụ: yêu cầu một trường không được bỏ trống (`required: [response_type]`), hoặc mô tả chính xác mục đích của một param.
 - **Which failure needed manual review instead of automatic grading?**
-  - `R12_confirm_before_send` khi model tự suy luận hỏi nội dung trước khi xin xác nhận.
+  Các tool calls sinh ra format JSON phức tạp, hoặc khi `send` thực sự gửi dữ liệu ra bên ngoài (webhook/API) cần xem nó có ném 500/400 error không.
 - **What would you improve next?**
-  - Đồng bộ lại mô tả trong `tools.yaml` cho công cụ `clarify` để không xung đột với `system_prompt.md`.
-
+  Xây dựng một lớp Memory dài hạn hơn cho Multi-turn thay vì chỉ nhìn vào history ngắn, và tách bạch Agent thành các Sub-Agents (như PolicyAgent, SearchAgent) để giảm tải cho `system_prompt`.

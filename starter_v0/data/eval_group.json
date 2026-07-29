@@ -1,75 +1,121 @@
 {
-  "dataset_id": "day04_v2_research_group",
+  "dataset_id": "group_eval_set",
   "dataset_role": "group",
-  "description": "Bộ đánh giá gồm 10 case của nhóm G05: 5 single-turn và 5 multi-turn.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
+  "description": "10 test case do team tự viết cho AI Research Agent (5 single-turn + 5 multi-turn), dựa trên tools.yaml và eval_group.schema.example.json.",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
   "cases": [
     {
-      "id": "G01_single_notes_analysis",
+      "id": "G01_single_papers_search",
       "phase": "B",
-      "suite": "group",
-      "query": "- TODO: Gửi email cho khách hàng\n- Cần sửa code trước ngày mai\n- Task: Review PR.\nPhân tích đoạn ghi chú trên để lấy ra tối đa 3 hành động cần làm.",
+      "query": "Tìm giúp tôi các bài báo khoa học mới nhất về reinforcement learning from human feedback (RLHF).",
       "failure_type": "wrong_tool",
       "expect": {
         "tool_calls": [
           {
-            "name": "new_tool",
+            "name": "papers",
             "args": {
-              "text": "- TODO: Gửi email cho khách hàng\n- Cần sửa code trước ngày mai\n- Task: Review PR.",
-              "max_items": 3
+              "query": "reinforcement learning from human feedback"
             }
           }
         ]
       },
       "metadata": {
-        "skill": "local_text_analysis",
-        "difficulty": "medium",
-        "what_it_tests": "Phân tích văn bản ghi chú cục bộ bằng new_tool thay vì dùng lookup hay tools khác."
+        "what_it_tests": "Agent phải chọn tool 'papers' (arXiv) chứ không phải 'lookup' hay 'social_search' khi user hỏi về bài báo khoa học cụ thể."
       }
     },
     {
-      "id": "G02_single_notes_focus",
+      "id": "G02_single_lookup_news_today",
       "phase": "B",
-      "suite": "group",
-      "query": "OpenAI ra mắt GPT-5. Google cập nhật Gemini. Apple giới thiệu Siri mới.\nTập trung tóm tắt đoạn văn bản trên vào chủ đề AI.",
+      "query": "Có tin tức gì về chip AI hôm nay không?",
       "failure_type": "wrong_arg_value",
       "expect": {
         "tool_calls": [
           {
-            "name": "new_tool",
+            "name": "lookup",
             "args": {
-              "text": "OpenAI ra mắt GPT-5. Google cập nhật Gemini. Apple giới thiệu Siri mới.",
-              "focus": "AI"
+              "query": "chip AI",
+              "topic": "news",
+              "timeframe": "day"
             }
           }
         ]
       },
       "metadata": {
-        "skill": "local_text_analysis_focus",
-        "difficulty": "medium",
-        "what_it_tests": "Truyền tham số focus là 'AI' cho công cụ phân tích văn bản cục bộ."
+        "what_it_tests": "Agent phải map 'hôm nay' -> timeframe='day' (không dùng default 'week') và topic='news' vì user hỏi tin tức."
       }
     },
     {
-      "id": "G03_single_math_homework",
+      "id": "G03_single_timeline_elonmusk",
       "phase": "B",
-      "suite": "group",
-      "query": "Giải phương trình bậc 2 sau giúp mình: x^2 - 5x + 6 = 0",
+      "query": "Cho tôi xem 10 bài đăng gần đây nhất của Elon Musk.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent phải tự map tên thật 'Elon Musk' sang screenname 'elonmusk' và lấy đúng limit=10 thay vì default=5."
+      }
+    },
+    {
+      "id": "G04_single_policy_data_privacy",
+      "phase": "B",
+      "query": "Chính sách nội bộ của công ty về quyền riêng tư dữ liệu (data privacy) là gì?",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "policy",
+            "args": {
+              "query": "quyền riêng tư dữ liệu",
+              "policy_area": "data_privacy"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent phải dùng 'policy' (tài liệu nội bộ) thay vì 'lookup' (internet) khi user hỏi về chính sách công ty, và chọn đúng policy_area='data_privacy' thay vì 'all'."
+      }
+    },
+    {
+      "id": "G05_single_out_of_scope_booking",
+      "phase": "B",
+      "query": "Bạn đặt giúp tôi một vé máy bay đi Đà Nẵng vào ngày mai được không?",
       "failure_type": "out_of_scope",
       "expect": {
         "no_tool": true
       },
       "metadata": {
-        "skill": "out_of_scope_rejection",
-        "difficulty": "easy",
-        "what_it_tests": "Từ chối gọi tool cho các câu hỏi toán học nằm ngoài phạm vi nghiên cứu."
+        "what_it_tests": "Yêu cầu đặt vé máy bay nằm ngoài phạm vi mọi tool hiện có; agent không được cố gọi fetch/lookup/send để 'giả vờ' xử lý mà phải nhận biết đây là out_of_scope."
       }
     },
     {
-      "id": "G04_single_missing_notes_text",
+      "id": "G06_multi_missing_info_fetch",
       "phase": "B",
-      "suite": "group",
-      "query": "Hãy đọc và phân tích nội dung trang web này giúp mình",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tôi muốn đọc nội dung một trang web."
+        },
+        {
+          "role": "user",
+          "content": "Bạn đọc giúp tôi nhé."
+        }
+      ],
       "failure_type": "missing_info",
       "expect": {
         "tool_calls": [
@@ -82,188 +128,120 @@
         ]
       },
       "metadata": {
-        "skill": "clarify_missing_info",
-        "difficulty": "medium",
-        "what_it_tests": "Yêu cầu người dùng cung cấp thêm URL trang web khi bị thiếu."
+        "what_it_tests": "User chưa cung cấp URL nào ở cả 2 turn; agent phải gọi clarify(response_type='text') để hỏi URL thay vì gọi fetch với url rỗng."
       }
     },
     {
-      "id": "G05_single_confirm_before_publish",
+      "id": "G07_multi_send_after_confirmation",
       "phase": "B",
-      "suite": "group",
-      "query": "Gửi thông báo 'Chào buổi sáng' lên Telegram giúp mình",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Soạn và gửi tin nhắn 'Cảm ơn quý khách đã ủng hộ' tới khách hàng."
+        },
+        {
+          "role": "user",
+          "content": "Có, gửi luôn đi."
+        }
+      ],
       "failure_type": "wrong_boundary",
       "expect": {
         "tool_calls": [
           {
-            "name": "clarify",
+            "name": "send",
             "args": {
-              "response_type": "yes_no"
+              "text": "Cảm ơn quý khách đã ủng hộ",
+              "confirmed": true
             }
           }
         ]
       },
       "metadata": {
-        "skill": "confirm_before_write",
-        "difficulty": "medium",
-        "what_it_tests": "Yêu cầu xác nhận yes_no trước khi thực hiện hành động ghi (send) lên Telegram."
+        "what_it_tests": "Sau khi user đã xác nhận 'có/gửi luôn' ở turn cuối, agent phải gọi send(confirmed=true) trực tiếp thay vì hỏi lại clarify(yes_no) một lần nữa."
       }
     },
     {
-      "id": "G06_multi_switch_source",
+      "id": "G08_multi_unnecessary_tool_capabilities",
       "phase": "B",
-      "suite": "group",
       "turns": [
         {
           "role": "user",
-          "content": "Tìm kiếm tin tức về OpenAI trên mạng xã hội Twitter giúp mình"
+          "content": "Tìm tin tức về xe điện hôm nay."
         },
         {
           "role": "user",
-          "content": "Bỏ Twitter đi, chuyển sang tìm kiếm tin tức trên web thông thường nhé"
+          "content": "Thôi khỏi, không cần nữa."
         },
         {
           "role": "user",
-          "content": "Giữ nguyên chủ đề OpenAI"
+          "content": "Bạn có thể giúp gì cho tôi?"
         }
       ],
-      "failure_type": "wrong_tool",
-      "expect": {
-        "tool_calls": [
-          {
-            "name": "lookup",
-            "args": {
-              "query": "OpenAI",
-              "topic": "news"
-            }
-          }
-        ]
-      },
-      "metadata": {
-        "skill": "multiturn_switch_tool",
-        "difficulty": "hard",
-        "what_it_tests": "Chuyển đổi nguồn tìm kiếm từ Twitter sang web lookup và loại bỏ tool social_search."
-      }
-    },
-    {
-      "id": "G07_multi_carryover_focus",
-      "phase": "B",
-      "suite": "group",
-      "turns": [
-        {
-          "role": "user",
-          "content": "Công ty đang tuyển 5 kỹ sư AI mới. Doanh thu quý này tăng trưởng tốt.\nPhân tích đoạn văn bản trên và tập trung vào chủ đề tuyển dụng."
-        },
-        {
-          "role": "user",
-          "content": "Phân tích lại đoạn text đó với số lượng từ khóa tối đa là 3"
-        }
-      ],
-      "failure_type": "wrong_arg_value",
-      "expect": {
-        "tool_calls": [
-          {
-            "name": "new_tool",
-            "args": {
-              "text": "Công ty đang tuyển 5 kỹ sư AI mới. Doanh thu quý này tăng trưởng tốt.",
-              "focus": "tuyển dụng",
-              "max_items": 3
-            }
-          }
-        ]
-      },
-      "metadata": {
-        "skill": "multiturn_carryover_args",
-        "difficulty": "hard",
-        "what_it_tests": "Giữ lại text và focus từ lượt trước, chỉ cập nhật max_items mới."
-      }
-    },
-    {
-      "id": "G08_multi_confirm_after_clarify",
-      "phase": "B",
-      "suite": "group",
-      "turns": [
-        {
-          "role": "user",
-          "content": "Tìm kiếm các bài báo khoa học về OpenAI trên arXiv giúp tôi"
-        },
-        {
-          "role": "user",
-          "content": "Giới hạn tối đa là 3 bài báo nhé"
-        }
-      ],
-      "failure_type": "wrong_arg_value",
-      "expect": {
-        "tool_calls": [
-          {
-            "name": "papers",
-            "args": {
-              "query": "OpenAI",
-              "max_results": 3
-            }
-          }
-        ]
-      },
-      "metadata": {
-        "skill": "multiturn_carryover_query",
-        "difficulty": "medium",
-        "what_it_tests": "Mang chủ đề OpenAI từ lượt trước sang và cập nhật max_results thành 3."
-      }
-    },
-    {
-      "id": "G09_multi_out_of_scope",
-      "phase": "B",
-      "suite": "group",
-      "turns": [
-        {
-          "role": "user",
-          "content": "Tìm kiếm tin tức về OpenAI trên web giúp tôi"
-        },
-        {
-          "role": "user",
-          "content": "Viết giúp tôi một đoạn mã Python để kết nối API đó"
-        }
-      ],
-      "failure_type": "out_of_scope",
+      "failure_type": "unnecessary_tool",
       "expect": {
         "no_tool": true
       },
       "metadata": {
-        "skill": "multiturn_out_of_scope",
-        "difficulty": "medium",
-        "what_it_tests": "Lượt đầu gọi tìm kiếm hợp lệ, lượt sau yêu cầu code nằm ngoài phạm vi (rejection)."
+        "what_it_tests": "Chỉ turn cuối được chấm: user đã huỷ yêu cầu tìm tin và chỉ hỏi về khả năng của agent, nên không cần gọi bất kỳ tool nào."
       }
     },
     {
-      "id": "G10_multi_correction_topic",
+      "id": "G09_multi_paper_text_specific_url",
       "phase": "B",
-      "suite": "group",
       "turns": [
         {
           "role": "user",
-          "content": "Tìm kiếm tin tức về chủ đề Nvidia"
+          "content": "Tôi đang nghiên cứu về kiến trúc Transformer."
         },
         {
           "role": "user",
-          "content": "Không, đổi sang tìm kiếm tin tức về AMD"
+          "content": "Lấy giúp tôi nội dung bài báo tại https://arxiv.org/abs/1706.03762, chỉ cần 3 trang đầu thôi."
         }
       ],
       "failure_type": "wrong_arg_value",
       "expect": {
         "tool_calls": [
           {
-            "name": "lookup",
+            "name": "paper_text",
             "args": {
-              "query": "AMD",
-              "topic": "news"
+              "arxiv_url": "https://arxiv.org/abs/1706.03762",
+              "max_pages": 3
             }
           }
         ]
       },
       "metadata": {
-        "skill": "multiturn_correction",
-        "difficulty": "medium",
-        "what_it_tests": "Ghi đè chủ đề Nvidia bằng AMD ở lượt sau khi người dùng sửa đổi yêu cầu."
+        "what_it_tests": "Agent phải trích đúng URL bài báo và giới hạn max_pages=3 theo yêu cầu cụ thể của user, không dùng giá trị default (5)."
+      }
+    },
+    {
+      "id": "G10_multi_social_search_top_limit",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tôi cần chuẩn bị báo cáo về các thảo luận nổi bật nhất về 'AI safety' trên mạng xã hội."
+        },
+        {
+          "role": "user",
+          "content": "Tìm top 5 bài viết nổi bật nhất về chủ đề này, không cần bài mới nhất."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI safety",
+              "search_type": "Top",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Agent phải chọn search_type='Top' (không phải default 'Latest') vì user rõ ràng muốn bài 'nổi bật nhất, không cần mới nhất', và limit=5."
       }
     }
   ]
