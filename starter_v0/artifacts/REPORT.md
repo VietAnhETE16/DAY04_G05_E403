@@ -14,7 +14,6 @@
 | 4   |  Vũ Quang Tùng  |     2A202601545      |      Thành viên           |
 | 5   |  Chu Thị Yến Khanh  |     2A202601739      |      Thành viên           |
 
-
 ---
 
 # PHẦN A — Giới thiệu agent
@@ -80,13 +79,13 @@ Fill from `artifacts/version_log.csv` and `runs/*.json`.
 
 | Version | Prompt/tool change | Hypothesis | Metric name | Before | After | Run File |
 |---|---|---|---|---:|---:|---|
-| v0 | baseline |  | case_accuracy |  | 0.65 | runs/v0_B_base_...json |
-| v1 | Thêm luật xử lý missing_info và out_of_scope vào system_prompt | LLM cần lệnh rõ ràng để không đoán mò URL/Handle | case_accuracy | 0.65 | 0.85 | runs/v1_B_base_...json |
-| v2 | Sửa mô tả param response_type trong tools.yaml | Dòng mô tả rõ "yes_no" và "text" sẽ điều hướng LLM | case_accuracy | 0.85 | 0.90 | runs/v2_B_base_...json |
-| v3 | Chặn extra tool khi user "switch" và force "yes_no" | Mệnh đề rõ ràng về việc huỷ tool cũ sẽ tránh gọi thừa (M06) | case_accuracy | 0.90 | 0.95 | runs/v3_B_base_...json |
-| v4 | Đặt response_type thành required trong tools.yaml | Nếu thiếu required, LLM có thể ỷ lại default | case_accuracy | 0.95 | 0.95 | runs/v4_B_base_...json |
-| v5 | Thêm "highest precedence" cho yes_no vào prompt | Ngay cả khi thiếu text, luật yes_no phải đè lên luật missing_info (R12) | case_accuracy | 0.95 | 1.00 | runs/v5_B_base_...json |
-| v6 | Cấu trúc lại toàn bộ system_prompt theo nguyên lý | Tư duy luận lý sẽ giải quyết được case group (G07, G10) thay vì vá lỗi | case_accuracy | 0.80 | 1.00 | runs/v6_B_group_...json |
+| v0 | baseline |  | case_accuracy |  | 0.65 | runs/v0_B_base_openrouter_20260729T102137391672.json |
+| v1 | Thêm luật xử lý missing_info và out_of_scope vào system_prompt | LLM cần lệnh rõ ràng để không đoán mò URL/Handle | case_accuracy | 0.65 | 0.85 | runs/v1_B_base_openrouter_20260729T103629310293.json |
+| v2 | Sửa mô tả param response_type trong tools.yaml | Dòng mô tả rõ "yes_no" và "text" sẽ điều hướng LLM | case_accuracy | 0.85 | 0.90 | runs/v2_B_base_openrouter_20260729T104054476503.json |
+| v3 | Chặn extra tool khi user "switch" và force "yes_no" | Mệnh đề rõ ràng về việc huỷ tool cũ sẽ tránh gọi thừa (M06) | case_accuracy | 0.90 | 0.95 | runs/v3_B_base_openrouter_20260729T104220451723.json |
+| v4 | Đặt response_type thành required trong tools.yaml | Nếu thiếu required, LLM có thể ỷ lại default | case_accuracy | 0.95 | 0.95 | runs/v4_B_base_openrouter_20260729T104415324288.json |
+| v5 | Thêm "highest precedence" cho yes_no vào prompt | Ngay cả khi thiếu text, luật yes_no phải đè lên luật missing_info (R12) | case_accuracy | 0.95 | 1.00 | runs/v5_B_base_openrouter_20260729T104623631425.json |
+| v6 | Cấu trúc lại toàn bộ system_prompt theo nguyên lý | Tư duy luận lý sẽ giải quyết được case group (G07, G10) thay vai lỗi | case_accuracy | 0.80 | 1.00 | runs/v6_B_group_openrouter_20260729T110422641931.json |
 
 ## B2. Failure analysis
 

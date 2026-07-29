@@ -10,6 +10,7 @@
 | 4   |  Vũ Quang Tùng  |     2A202601545      |      Thành viên           |
 | 5   |  Chu Thị Yến Khanh  |     2A202601739      |      Thành viên           |
 
+---
 
 ## Brief
 
