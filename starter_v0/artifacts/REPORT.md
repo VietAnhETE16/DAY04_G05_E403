@@ -8,7 +8,7 @@
 
 - Team: TrongDung-01965
 - Members: Trần Tuấn Trung (Tool Developer), Nguyễn Trọng Dũng (Eval Architect), Chu Thị Yến Khanh (Prompt Engineer), Vũ Quang Tùng (UI Developer), Mai Việt Anh (DevOps & Báo cáo)
-- Provider/model: OpenRouter / gemini-2.5-flash
+- Provider/model: OpenRouter / openai
 
 ---
 

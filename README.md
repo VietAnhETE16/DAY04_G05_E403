@@ -2,13 +2,13 @@
 
 ## Bảng Phân Công Công Việc (Nhóm 5 Thành Viên)
 
-| Thành viên | Vai trò | Các file sửa đổi / tạo mới | Nhiệm vụ chính |
-| :--- | :--- | :--- | :--- |
-| **Trần Tuấn Trung** | **Tool Developer** | <ul><li>`tools/new_tool/`</li><li>`tools/__init__.py`</li><li>`artifacts/tools.yaml`</li></ul> | Phát triển các tool mới tự chọn (để nhận điểm bonus). |
-| **Nguyễn Trọng Dũng** | **Eval Architect** | <ul><li>`data/eval_group.json`</li></ul> | Xây dựng 10 test case (5 single-turn, 5 multi-turn) đánh giá Agent. |
-| **Chu Thị Yến Khanh** | **Prompt Engineer** | <ul><li>`artifacts/system_prompt.md`</li><li>`artifacts/version_log.csv`</li></ul> | Tối ưu prompt hệ thống qua các version `v1`, `v2`, `v3`. |
-| **Vũ Quang Tùng** | **UI Developer** | <ul><li>`starter_v0/app.py`</li><li>`starter_v0/requirements.txt`</li></ul> | Thiết kế giao diện chat & hiển thị tool execution trace (Streamlit). |
-| **Mai Việt Anh** | **DevOps & Báo cáo** | <ul><li>`artifacts/REPORT.md`</li></ul> | Chạy baseline `v0`, cấu hình Cloudflare Tunnel và viết report nhóm. |
+| STT | Họ và tên | Mã học viên | Vai trò trong nhóm |
+|-----|-----------|-------------|--------------------|
+| 1   |  Mai Việt Anh  |     2A202601083      |      Thành viên            |
+| 2   |  Trần Tuấn Trung  |     2A202601769     |      Thành viên            |
+| 3   |  Nguyễn Trọng Dũng   |     2A202601965      |      Nhóm trưởng            |
+| 4   |  Vũ Quang Tùng  |     2A202601545      |      Thành viên           |
+| 5   |  Chu Thị Yến Khanh  |     2A202601739      |      Thành viên           |
 
 ---
 
