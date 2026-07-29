@@ -14,6 +14,9 @@
 | 4   |  Vũ Quang Tùng  |     2A202601545      |      Thành viên           |
 | 5   |  Chu Thị Yến Khanh  |     2A202601739      |      Thành viên           |
 
+## Team: TrongDung-01965
+- Members: Trần Tuấn Trung (Tool Developer), Nguyễn Trọng Dũng (Eval Architect), Chu Thị Yến Khanh (Prompt Engineer), Vũ Quang Tùng (UI Developer), Mai Việt Anh (DevOps & Báo cáo)
+- Provider/model: OpenRouter / openai
 ---
 
 # PHẦN A — Giới thiệu agent
