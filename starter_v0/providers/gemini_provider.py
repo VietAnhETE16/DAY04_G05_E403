@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import time
 from typing import Any
 
 from providers.base import ModelResponse, ToolCall
@@ -66,6 +68,18 @@ def _function_call_args(call: Any) -> dict[str, Any]:
     return {}
 
 
+def _quota_retry_delay_seconds(error: Exception) -> float | None:
+    """Return Gemini's requested cooldown for a retryable quota error."""
+    message = str(error)
+    if "429" not in message or "RESOURCE_EXHAUSTED" not in message:
+        return None
+
+    match = re.search(r"Please retry in\s+([0-9]+(?:\.[0-9]+)?)s", message)
+    if match:
+        return max(1.0, float(match.group(1)))
+    return 30.0
+
+
 class GeminiProvider:
     """Google Gemini API provider with normalized tool_calls output."""
 
@@ -73,7 +87,7 @@ class GeminiProvider:
         self,
         *,
         api_key_env: str = "GEMINI_API_KEY",
-        default_model: str = "gemini-3.5-flash",
+        default_model: str = "gemini-3.6-flash",
     ) -> None:
         self.api_key_env = api_key_env
         self.default_model = default_model
@@ -106,11 +120,20 @@ class GeminiProvider:
             config_kwargs["tools"] = [types.Tool(function_declarations=declarations)]
 
         client = genai.Client(api_key=api_key)
-        resp = client.models.generate_content(
-            model=model or self.default_model,
-            contents=contents,
-            config=types.GenerateContentConfig(**config_kwargs),
-        )
+        max_retries = int(os.getenv("GEMINI_QUOTA_MAX_RETRIES", "8"))
+        for attempt in range(max_retries + 1):
+            try:
+                resp = client.models.generate_content(
+                    model=model or self.default_model,
+                    contents=contents,
+                    config=types.GenerateContentConfig(**config_kwargs),
+                )
+                break
+            except Exception as exc:
+                retry_delay = _quota_retry_delay_seconds(exc)
+                if retry_delay is None or attempt >= max_retries:
+                    raise
+                time.sleep(retry_delay + 1.0)
 
         text_parts: list[str] = []
         calls: list[ToolCall] = []
