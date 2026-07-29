@@ -1,0 +1,1091 @@
+{
+  "run_id": "v3_B_group_openai_20260729T122058521097",
+  "version": "v3",
+  "artifact_version": "v3+p99982840ae21+t07113bc206a4",
+  "prompt_hash": "99982840ae216f6593ac71d68e8eb22e1602a4c3a805e5726ef157f87ac9282e",
+  "tools_hash": "07113bc206a4aaed97689d63c41f2e90c08f87cab2c5fb0ce696ae266e782780",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "C:\\Users\\VIET ANH\\Desktop\\DAY04_G05_E403\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\VIET ANH\\Desktop\\DAY04_G05_E403\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Bộ đánh giá gồm 10 case của nhóm G05: 5 single-turn và 5 multi-turn.",
+  "generated_at": "2026-07-29T12:20:58",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 8,
+    "case_accuracy": 0.8,
+    "tool_routing_accuracy": 0.9,
+    "argument_accuracy": 0.8,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {
+      "wrong_arg_value": 1,
+      "missing_info": 1
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 1,
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_single_notes_analysis",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "local_text_analysis",
+        "difficulty": "medium",
+        "what_it_tests": "Phân tích văn bản ghi chú cục bộ bằng new_tool thay vì dùng lookup hay tools khác."
+      },
+      "input": "- TODO: Gửi email cho khách hàng\n- Cần sửa code trước ngày mai\n- Task: Review PR.\nPhân tích đoạn ghi chú trên để lấy ra tối đa 3 hành động cần làm.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "new_tool",
+            "args": {
+              "text": "- TODO: Gửi email cho khách hàng\n- Cần sửa code trước ngày mai\n- Task: Review PR.",
+              "max_items": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "new_tool",
+            "args": {
+              "text": "- TODO: Gửi email cho khách hàng\n- Cần sửa code trước ngày mai\n- Task: Review PR.",
+              "max_items": 3
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "new_tool",
+          "args": {
+            "text": "- TODO: Gửi email cho khách hàng\n- Cần sửa code trước ngày mai\n- Task: Review PR.",
+            "max_items": 3
+          },
+          "result": {
+            "summary": "- TODO: Gửi email cho khách hàng - Cần sửa code trước ngày mai - Task: Review PR.",
+            "action_items": [
+              "Gửi email cho khách hàng",
+              "Review PR."
+            ],
+            "keywords": [
+              "todo",
+              "email",
+              "khách"
+            ],
+            "stats": {
+              "words": 18,
+              "lines": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_single_notes_focus",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "local_text_analysis_focus",
+        "difficulty": "medium",
+        "what_it_tests": "Truyền tham số focus là 'AI' cho công cụ phân tích văn bản cục bộ."
+      },
+      "input": "OpenAI ra mắt GPT-5. Google cập nhật Gemini. Apple giới thiệu Siri mới. Thời tiết hôm nay rất đẹp.\nTập trung tóm tắt đoạn văn bản trên vào chủ đề AI.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "new_tool",
+            "args": {
+              "text": "OpenAI ra mắt GPT-5. Google cập nhật Gemini. Apple giới thiệu Siri mới. Thời tiết hôm nay rất đẹp.",
+              "focus": "AI"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "new_tool",
+            "args": {
+              "text": "OpenAI ra mắt GPT-5. Google cập nhật Gemini. Apple giới thiệu Siri mới.",
+              "focus": "AI",
+              "max_items": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "text: expected 'OpenAI ra mắt GPT-5. Google cập nhật Gemini. Apple giới thiệu Siri mới. Thời tiết hôm nay rất đẹp.', got 'OpenAI ra mắt GPT-5. Google cập nhật Gemini. Apple giới thiệu Siri mới.'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "new_tool",
+          "args": {
+            "text": "OpenAI ra mắt GPT-5. Google cập nhật Gemini. Apple giới thiệu Siri mới.",
+            "focus": "AI",
+            "max_items": 5
+          },
+          "result": {
+            "summary": "OpenAI ra mắt GPT-5. Google cập nhật Gemini. Apple giới thiệu Siri mới.",
+            "action_items": [],
+            "keywords": [
+              "openai",
+              "gpt5",
+              "google",
+              "nhật",
+              "gemini"
+            ],
+            "stats": {
+              "words": 13,
+              "lines": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_single_math_homework",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "out_of_scope_rejection",
+        "difficulty": "easy",
+        "what_it_tests": "Từ chối gọi tool cho các câu hỏi toán học nằm ngoài phạm vi nghiên cứu."
+      },
+      "input": "Giải phương trình bậc 2 sau giúp mình: x^2 - 5x + 6 = 0",
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi chỉ hỗ trợ các tác vụ nghiên cứu và không thể giải các bài toán toán học. Bạn có thể sử dụng các công cụ giải toán trực tuyến hoặc tham khảo sách giáo khoa để tìm hiểu cách giải phương trình bậc 2.",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G04_single_missing_notes_text",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "clarify_missing_info",
+        "difficulty": "medium",
+        "what_it_tests": "Yêu cầu người dùng cung cấp thêm nội dung văn bản ghi chú khi bị thiếu."
+      },
+      "input": "Hãy tóm tắt và phân tích các ghi chú cuộc họp giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "new_tool",
+            "args": {
+              "text": "Hãy tóm tắt và phân tích các ghi chú cuộc họp giúp mình",
+              "focus": "",
+              "max_items": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call clarify",
+          "extra tool call new_tool"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "new_tool",
+          "args": {
+            "text": "Hãy tóm tắt và phân tích các ghi chú cuộc họp giúp mình",
+            "focus": "",
+            "max_items": 5
+          },
+          "result": {
+            "summary": "Hãy tóm tắt và phân tích các ghi chú cuộc họp giúp mình",
+            "action_items": [],
+            "keywords": [
+              "phân",
+              "tích",
+              "cuộc",
+              "giúp",
+              "mình"
+            ],
+            "stats": {
+              "words": 13,
+              "lines": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "G05_single_confirm_before_publish",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "confirm_before_write",
+        "difficulty": "medium",
+        "what_it_tests": "Yêu cầu xác nhận yes_no trước khi thực hiện hành động ghi (send) lên Telegram."
+      },
+      "input": "Gửi thông báo 'Chào buổi sáng' lên Telegram giúp mình",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có chắc chắn muốn gửi thông báo 'Chào buổi sáng' lên Telegram không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có chắc chắn muốn gửi thông báo 'Chào buổi sáng' lên Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có chắc chắn muốn gửi thông báo 'Chào buổi sáng' lên Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_multi_switch_source",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_switch_tool",
+        "difficulty": "hard",
+        "what_it_tests": "Chuyển đổi nguồn tìm kiếm từ Twitter sang web lookup và loại bỏ tool social_search."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm kiếm tin tức về OpenAI trên mạng xã hội Twitter giúp mình"
+        },
+        {
+          "role": "user",
+          "content": "Bỏ Twitter đi, chuyển sang tìm kiếm tin tức trên web thông thường nhé"
+        },
+        {
+          "role": "user",
+          "content": "Giữ nguyên chủ đề OpenAI"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "OpenAI",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "OpenAI",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "OpenAI",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "OpenAI is launching new corporate software that takes it beyond the AI model war - Business Insider",
+                "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7",
+                "source": "businessinsider.com",
+                "summary": "# OpenAI is launching new corporate software that takes it beyond the AI model war. OpenAI is launching a new product that could help the company take another step beyond the ultra-competitive business of making AI models. The offering, called OpenAI Presence, helps companies run AI agents better by connecting these systems to internal corporate data, policies, existing software, and workflows. This is the latest example of OpenAI trying to move beyond selling access to AI models and into more parts of the corporate software market.While Presence could help OpenAI win more corporate business, it could also leave the startup competing with some of its AI model customers. If that's the direction OpenAI is taking, it increasingly looks less like a model company and more like an enterprise software provider with AI at its core. Look out for an alert in your inbox the next time publishes a story! Look out for an alert in your inbox the next time a new story is published!",
+                "score": 0.7014069
+              },
+              {
+                "title": "OpenAI says its AI went rogue and launched 'unprecedented' cyber-attack - BBC",
+                "url": "https://www.bbc.com/news/articles/c3ek3gvdnj3o",
+                "source": "bbc.com",
+                "summary": "# OpenAI says its AI went rogue and launched 'unprecedented' cyber-attack. OpenAI has revealed some of its most advanced AI models went rogue and hacked a start-up after it lost control of them during a security test. The ChatGPT-maker said its agents - AI bots which can operate alone after some human instruction – were being tested in a controlled environment, but found vulnerabilities and managed to escape. OpenAI said the incident was \"unprecedented\", and it was working with Hugging Face to investigate what happened and strengthen safeguards. Gina Neff, head of the Minderoo Centre for Technology and Democracy at the University of Cambridge, told BBC Radio 4's Today programme that the security tests - called sandboxes - are \"supposed to be secure environments where you can see what the models are capable of\". Once outside, the AI identified Hugging Face as a likely source of the answers they were seeking in the test, and tried to gain access.",
+                "score": 0.6690754
+              },
+              {
+                "title": "OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.eu",
+                "url": "https://www.consultancy.eu/news/amp/14135/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network",
+                "source": "consultancy.eu",
+                "summary": "# OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network. ***OpenAI, the company behind ChatGPT and a suite of enterprise AI solutions, has named Sia an Advanced Partner within its OpenAI Partner Network.***. The recognition reflects the consultancy’s track record in helping organisations adopt and scale AI solutions, and its ability to drive enterprise-wide transformation through AI technologies. Launched last month, the OpenAI Partner Network brings together a select group of global consulting and technology firms to accelerate the adoption of OpenAI solutions at scale. Only a limited number of organisations were appointed as Founding Partners, including Accenture, Bain & Company, Boston Consulting Group, McKinsey & Company, PwC, Capgemini, EY and Sia. Sia is now among the first of the cohort to achieve Advanced Partner status, recognising its expertise in integrating ChatGPT Enterprise, Codex and OpenAI’s models into daily operations. “Becoming an OpenAI Advanced Partner reflects our ambition to help organisations move beyond AI experimentation and achieve enterprise-wide transformation,” said Matthieu Courtecuisse, CEO and Founder of Sia.",
+                "score": 0.58123237
+              },
+              {
+                "title": "OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.com.au",
+                "url": "https://www.consultancy.com.au/news/amp/12286/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network",
+                "source": "consultancy.com.au",
+                "summary": "# OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network. ***OpenAI, the company behind ChatGPT and a suite of enterprise AI solutions, has named Sia an Advanced Partner within its OpenAI Partner Network.***. The recognition reflects the consultancy’s track record in helping organisations adopt and scale AI solutions, and its ability to drive enterprise-wide transformation through AI technologies. Launched last month, the OpenAI Partner Network brings together a select group of global consulting and technology firms to accelerate the adoption of OpenAI solutions at scale. Only a limited number of organisations were appointed as Founding Partners, including Accenture, Bain & Company, Boston Consulting Group, McKinsey & Company, PwC, Capgemini, EY and Sia. Sia is now among the first of the cohort to achieve Advanced Partner status, recognising its expertise in integrating ChatGPT Enterprise, Codex and OpenAI’s models into daily operations. “Becoming an OpenAI Advanced Partner reflects our ambition to help organisations move beyond AI experimentation and achieve enterprise-wide transformation,” said Matthieu Courtecuisse, CEO and Founder of Sia.",
+                "score": 0.5780915
+              },
+              {
+                "title": "OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy-me.com",
+                "url": "https://www.consultancy-me.com/news/amp/13871/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network",
+                "source": "consultancy-me.com",
+                "summary": "# OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network. ***OpenAI, the company behind ChatGPT and a suite of enterprise AI solutions, has named Sia an Advanced Partner within its OpenAI Partner Network.***. The recognition reflects the consultancy’s track record in helping organisations adopt and scale AI solutions, and its ability to drive enterprise-wide transformation through AI technologies. Launched last month, the OpenAI Partner Network brings together a select group of global consulting and technology firms to accelerate the adoption of OpenAI solutions at scale. Only a limited number of organisations were appointed as Founding Partners, including Accenture, Bain & Company, Boston Consulting Group, McKinsey & Company, PwC, Capgemini, EY and Sia. Sia is now among the first of the cohort to achieve Advanced Partner status, recognising its expertise in integrating ChatGPT Enterprise, Codex and OpenAI’s models into daily operations. “Becoming an OpenAI Advanced Partner reflects our ambition to help organisations move beyond AI experimentation and achieve enterprise-wide transformation,” said Matthieu Courtecuisse, CEO and Founder of Sia.",
+                "score": 0.5709301
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multi_carryover_focus",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_carryover_args",
+        "difficulty": "hard",
+        "what_it_tests": "Giữ lại text và focus từ lượt trước, chỉ cập nhật max_items mới."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Công ty đang tuyển 5 kỹ sư AI mới. Doanh thu quý này tăng trưởng tốt.\nPhân tích đoạn văn bản trên và tập trung vào chủ đề tuyển dụng."
+        },
+        {
+          "role": "user",
+          "content": "Phân tích lại đoạn text đó với số lượng từ khóa tối đa là 3"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "new_tool",
+            "args": {
+              "text": "Công ty đang tuyển 5 kỹ sư AI mới. Doanh thu quý này tăng trưởng tốt.",
+              "focus": "tuyển dụng",
+              "max_items": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "new_tool",
+            "args": {
+              "text": "Công ty đang tuyển 5 kỹ sư AI mới. Doanh thu quý này tăng trưởng tốt.",
+              "focus": "tuyển dụng",
+              "max_items": 3
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "new_tool",
+          "args": {
+            "text": "Công ty đang tuyển 5 kỹ sư AI mới. Doanh thu quý này tăng trưởng tốt.",
+            "focus": "tuyển dụng",
+            "max_items": 3
+          },
+          "result": {
+            "summary": "Công ty đang tuyển 5 kỹ sư AI mới. Doanh thu quý này tăng trưởng tốt.",
+            "action_items": [],
+            "keywords": [
+              "công",
+              "đang",
+              "tuyển"
+            ],
+            "stats": {
+              "words": 16,
+              "lines": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_multi_confirm_after_clarify",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_carryover_query",
+        "difficulty": "medium",
+        "what_it_tests": "Mang chủ đề OpenAI từ lượt trước sang và cập nhật max_results thành 3."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm kiếm các bài báo khoa học về OpenAI trên arXiv giúp tôi"
+        },
+        {
+          "role": "user",
+          "content": "Giới hạn tối đa là 3 bài báo nhé"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "OpenAI",
+              "max_results": 3
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "OpenAI",
+              "max_results": 3
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "OpenAI",
+            "max_results": 3
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "OpenAI",
+            "api_query": "all:OpenAI",
+            "total_results": 2759,
+            "items": [
+              {
+                "arxiv_id": "1808.00177v5",
+                "title": "Learning Dexterous In-Hand Manipulation",
+                "summary": "We use reinforcement learning (RL) to learn dexterous in-hand manipulation policies which can perform vision-based object reorientation on a physical Shadow Dexterous Hand. The training is performed in a simulated environment in which we randomize many of the physical properties of the system like friction coefficients and an object's appearance. Our policies transfer to the physical robot despite being trained entirely in simulation. Our method does not rely on any human demonstrations, but many behaviors found in human manipulation emerge naturally, including finger gaiting, multi-finger coordination, and the controlled use of gravity. Our results were obtained using the same distributed RL system that was used to train OpenAI Five. We also include a video of our results: https://youtu.be/jwSbzNHGflM",
+                "authors": [
+                  "OpenAI",
+                  "Marcin Andrychowicz",
+                  "Bowen Baker",
+                  "Maciek Chociej",
+                  "Rafal Jozefowicz",
+                  "Bob McGrew",
+                  "Jakub Pachocki",
+                  "Arthur Petron",
+                  "Matthias Plappert",
+                  "Glenn Powell",
+                  "Alex Ray",
+                  "Jonas Schneider",
+                  "Szymon Sidor",
+                  "Josh Tobin",
+                  "Peter Welinder",
+                  "Lilian Weng",
+                  "Wojciech Zaremba"
+                ],
+                "published": "2018-08-01T06:02:36Z",
+                "updated": "2019-01-18T23:26:53Z",
+                "url": "http://arxiv.org/abs/1808.00177v5",
+                "pdf_url": "https://arxiv.org/pdf/1808.00177v5",
+                "source": "arxiv.org",
+                "primary_category": "cs.LG",
+                "categories": [
+                  "cs.LG",
+                  "cs.AI",
+                  "cs.RO",
+                  "stat.ML"
+                ]
+              },
+              {
+                "arxiv_id": "2412.16720v2",
+                "title": "OpenAI o1 System Card",
+                "summary": "The o1 model series is trained with large-scale reinforcement learning to reason using chain of thought. These advanced reasoning capabilities provide new avenues for improving the safety and robustness of our models. In particular, our models can reason about our safety policies in context when responding to potentially unsafe prompts, through deliberative alignment. This leads to state-of-the-art performance on certain benchmarks for risks such as generating illicit advice, choosing stereotyped responses, and succumbing to known jailbreaks. Training models to incorporate a chain of thought before answering has the potential to unlock substantial benefits, while also increasing potential risks that stem from heightened intelligence. Our results underscore the need for building robust alignment methods, extensively stress-testing their efficacy, and maintaining meticulous risk management protocols. This report outlines the safety work carried out for the OpenAI o1 and OpenAI o1-mini models, including safety evaluations, external red teaming, and Preparedness Framework evaluations.",
+                "authors": [
+                  "OpenAI",
+                  ":",
+                  "Aaron Jaech",
+                  "Adam Kalai",
+                  "Adam Lerer",
+                  "Adam Richardson",
+                  "Ahmed El-Kishky",
+                  "Aiden Low",
+                  "Alec Helyar",
+                  "Aleksander Madry",
+                  "Alex Beutel",
+                  "Alex Carney",
+                  "Alex Iftimie",
+                  "Alex Karpenko",
+                  "Alex Tachard Passos",
+                  "Alexander Neitz",
+                  "Alexander Prokofiev",
+                  "Alexander Wei",
+                  "Allison Tam",
+                  "Ally Bennett",
+                  "Ananya Kumar",
+                  "Andre Saraiva",
+                  "Andrea Vallone",
+                  "Andrew Duberstein",
+                  "Andrew Kondrich",
+                  "Andrey Mishchenko",
+                  "Andy Applebaum",
+                  "Angela Jiang",
+                  "Ashvin Nair",
+                  "Barret Zoph",
+                  "Behrooz Ghorbani",
+                  "Bohan Zhang",
+                  "Ben Rossen",
+                  "Benjamin Sokolowsky",
+                  "Boaz Barak",
+                  "Bob McGrew",
+                  "Borys Minaiev",
+                  "Botao Hao",
+                  "Bowen Baker",
+                  "Brandon Houghton",
+                  "Brandon McKinzie",
+                  "Brydon Eastman",
+                  "Camillo Lugaresi",
+                  "Cary Bassin",
+                  "Cary Hudson",
+                  "Chak Ming Li",
+                  "Charles de Bourcy",
+                  "Chelsea Voss",
+                  "Chen Shen",
+                  "Chong Zhang",
+                  "Chris Koch",
+                  "Chris Orsinger",
+                  "Christopher Hesse",
+                  "Claudia Fischer",
+                  "Clive Chan",
+                  "Dan Roberts",
+                  "Daniel Kappler",
+                  "Daniel Levy",
+                  "Daniel Selsam",
+                  "David Dohan",
+                  "David Farhi",
+                  "David Mely",
+                  "David Robinson",
+                  "Dimitris Tsipras",
+                  "Doug Li",
+                  "Dragos Oprica",
+                  "Eben Freeman",
+                  "Eddie Zhang",
+                  "Edmund Wong",
+                  "Elizabeth Proehl",
+                  "Enoch Cheung",
+                  "Eric Mitchell",
+                  "Eric Wallace",
+                  "Erik Ritter",
+                  "Evan Mays",
+                  "Fan Wang",
+                  "Felipe Petroski Such",
+                  "Filippo Raso",
+                  "Florencia Leoni",
+                  "Foivos Tsimpourlas",
+                  "Francis Song",
+                  "Fred von Lohmann",
+                  "Freddie Sulit",
+                  "Geoff Salmon",
+                  "Giambattista Parascandolo",
+                  "Gildas Chabot",
+                  "Grace Zhao",
+                  "Greg Brockman",
+                  "Guillaume Leclerc",
+                  "Hadi Salman",
+                  "Haiming Bao",
+                  "Hao Sheng",
+                  "Hart Andrin",
+                  "Hessam Bagherinezhad",
+                  "Hongyu Ren",
+                  "Hunter Lightman",
+                  "Hyung Won Chung",
+                  "Ian Kivlichan",
+                  "Ian O'Connell",
+                  "Ian Osband",
+                  "Ignasi Clavera Gilaberte",
+                  "Ilge Akkaya",
+                  "Ilya Kostrikov",
+                  "Ilya Sutskever",
+                  "Irina Kofman",
+                  "Jakub Pachocki",
+                  "James Lennon",
+                  "Jason Wei",
+                  "Jean Harb",
+                  "Jerry Twore",
+                  "Jiacheng Feng",
+                  "Jiahui Yu",
+                  "Jiayi Weng",
+                  "Jie Tang",
+                  "Jieqi Yu",
+                  "Joaquin Quiñonero Candela",
+                  "Joe Palermo",
+                  "Joel Parish",
+                  "Johannes Heidecke",
+                  "John Hallman",
+                  "John Rizzo",
+                  "Jonathan Gordon",
+                  "Jonathan Uesato",
+                  "Jonathan Ward",
+                  "Joost Huizinga",
+                  "Julie Wang",
+                  "Kai Chen",
+                  "Kai Xiao",
+                  "Karan Singhal",
+                  "Karina Nguyen",
+                  "Karl Cobbe",
+                  "Katy Shi",
+                  "Kayla Wood",
+                  "Kendra Rimbach",
+                  "Keren Gu-Lemberg",
+                  "Kevin Liu",
+                  "Kevin Lu",
+                  "Kevin Stone",
+                  "Kevin Yu",
+                  "Lama Ahmad",
+                  "Lauren Yang",
+                  "Leo Liu",
+                  "Leon Maksin",
+                  "Leyton Ho",
+                  "Liam Fedus",
+                  "Lilian Weng",
+                  "Linden Li",
+                  "Lindsay McCallum",
+                  "Lindsey Held",
+                  "Lorenz Kuhn",
+                  "Lukas Kondraciuk",
+                  "Lukasz Kaiser",
+                  "Luke Metz",
+                  "Madelaine Boyd",
+                  "Maja Trebacz",
+                  "Manas Joglekar",
+                  "Mark Chen",
+                  "Marko Tintor",
+                  "Mason Meyer",
+                  "Matt Jones",
+                  "Matt Kaufer",
+                  "Max Schwarzer",
+                  "Meghan Shah",
+                  "Mehmet Yatbaz",
+                  "Melody Y. Guan",
+                  "Mengyuan Xu",
+                  "Mengyuan Yan",
+                  "Mia Glaese",
+                  "Mianna Chen",
+                  "Michael Lampe",
+                  "Michael Malek",
+                  "Michele Wang",
+                  "Michelle Fradin",
+                  "Mike McClay",
+                  "Mikhail Pavlov",
+                  "Miles Wang",
+                  "Mingxuan Wang",
+                  "Mira Murati",
+                  "Mo Bavarian",
+                  "Mostafa Rohaninejad",
+                  "Nat McAleese",
+                  "Neil Chowdhury",
+                  "Neil Chowdhury",
+                  "Nick Ryder",
+                  "Nikolas Tezak",
+                  "Noam Brown",
+                  "Ofir Nachum",
+                  "Oleg Boiko",
+                  "Oleg Murk",
+                  "Olivia Watkins",
+                  "Patrick Chao",
+                  "Paul Ashbourne",
+                  "Pavel Izmailov",
+                  "Peter Zhokhov",
+                  "Rachel Dias",
+                  "Rahul Arora",
+                  "Randall Lin",
+                  "Rapha Gontijo Lopes",
+                  "Raz Gaon",
+                  "Reah Miyara",
+                  "Reimar Leike",
+                  "Renny Hwang",
+                  "Rhythm Garg",
+                  "Robin Brown",
+                  "Roshan James",
+                  "Rui Shu",
+                  "Ryan Cheu",
+                  "Ryan Greene",
+                  "Saachi Jain",
+                  "Sam Altman",
+                  "Sam Toizer",
+                  "Sam Toyer",
+                  "Samuel Miserendino",
+                  "Sandhini Agarwal",
+                  "Santiago Hernandez",
+                  "Sasha Baker",
+                  "Scott McKinney",
+                  "Scottie Yan",
+                  "Shengjia Zhao",
+                  "Shengli Hu",
+                  "Shibani Santurkar",
+                  "Shraman Ray Chaudhuri",
+                  "Shuyuan Zhang",
+                  "Siyuan Fu",
+                  "Spencer Papay",
+                  "Steph Lin",
+                  "Suchir Balaji",
+                  "Suvansh Sanjeev",
+                  "Szymon Sidor",
+                  "Tal Broda",
+                  "Aidan Clark",
+                  "Tao Wang",
+                  "Taylor Gordon",
+                  "Ted Sanders",
+                  "Tejal Patwardhan",
+                  "Thibault Sottiaux",
+                  "Thomas Degry",
+                  "Thomas Dimson",
+                  "Tianhao Zheng",
+                  "Timur Garipov",
+                  "Tom Stasi",
+                  "Trapit Bansal",
+                  "Trevor Creech",
+                  "Troy Peterson",
+                  "Tyna Eloundou",
+                  "Valerie Qi",
+                  "Vineet Kosaraju",
+                  "Vinnie Monaco",
+                  "Vitchyr Pong",
+                  "Vlad Fomenko",
+                  "Weiyi Zheng",
+                  "Wenda Zhou",
+                  "Wenting Zhan",
+                  "Wes McCabe",
+                  "Wojciech Zaremba",
+                  "Yann Dubois",
+                  "Yinghai Lu",
+                  "Yining Chen",
+                  "Young Cha",
+                  "Yu Bai",
+                  "Yuchen He",
+                  "Yuchen Zhang",
+                  "Yunyun Wang",
+                  "Zheng Shao",
+                  "Zhuohan Li"
+                ],
+                "published": "2024-12-21T18:04:31Z",
+                "updated": "2026-04-30T02:46:40Z",
+                "url": "http://arxiv.org/abs/2412.16720v2",
+                "pdf_url": "https://arxiv.org/pdf/2412.16720v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2410.21287v1",
+                "title": "A Systematic Assessment of OpenAI o1-Preview for Higher Order Thinking in Education",
+                "summary": "As artificial intelligence (AI) continues to advance, it demonstrates capabilities comparable to human intelligence, with significant potential to transform education and workforce development. This study evaluates OpenAI o1-preview's ability to perform higher-order cognitive tasks across 14 dimensions, including critical thinking, systems thinking, computational thinking, design thinking, metacognition, data literacy, creative thinking, abstract reasoning, quantitative reasoning, logical reasoning, analogical reasoning, and scientific reasoning. We used validated instruments like the Ennis-Weir Critical Thinking Essay Test and the Biological Systems Thinking Test to compare the o1-preview's performance with human performance systematically. Our findings reveal that o1-preview outperforms humans in most categories, achieving 150% better results in systems thinking, computational thinking, data literacy, creative thinking, scientific reasoning, and abstract reasoning. However, compared to humans, it underperforms by around 25% in logical reasoning, critical thinking, and quantitative reasoning. In analogical reasoning, both o1-preview and humans achieved perfect scores. Despite these strengths, the o1-preview shows limitations in abstract reasoning, where human psychology students outperform it, highlighting the continued importance of human oversight in tasks requiring high-level abstraction. These results have significant educational implications, suggesting a shift toward developing human skills that complement AI, such as creativity, abstract reasoning, and critical thinking. This study emphasizes the transformative potential of AI in education and calls for a recalibration of educational goals, teaching methods, and curricula to align with an AI-driven world.",
+                "authors": [
+                  "Ehsan Latif",
+                  "Yifan Zhou",
+                  "Shuchen Guo",
+                  "Yizhu Gao",
+                  "Lehong Shi",
+                  "Matthew Nayaaba",
+                  "Gyeonggeon Lee",
+                  "Liang Zhang",
+                  "Arne Bewersdorff",
+                  "Luyang Fang",
+                  "Xiantong Yang",
+                  "Huaqin Zhao",
+                  "Hanqi Jiang",
+                  "Haoran Lu",
+                  "Jiaxi Li",
+                  "Jichao Yu",
+                  "Weihang You",
+                  "Zhengliang Liu",
+                  "Vincent Shung Liu",
+                  "Hui Wang",
+                  "Zihao Wu",
+                  "Jin Lu",
+                  "Fei Dou",
+                  "Ping Ma",
+                  "Ninghao Liu",
+                  "Tianming Liu",
+                  "Xiaoming Zhai"
+                ],
+                "published": "2024-10-11T20:30:16Z",
+                "updated": "2024-10-11T20:30:16Z",
+                "url": "http://arxiv.org/abs/2410.21287v1",
+                "pdf_url": "https://arxiv.org/pdf/2410.21287v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CY",
+                "categories": [
+                  "cs.CY",
+                  "cs.AI"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_multi_out_of_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_out_of_scope",
+        "difficulty": "medium",
+        "what_it_tests": "Lượt đầu gọi tìm kiếm hợp lệ, lượt sau yêu cầu code nằm ngoài phạm vi (rejection)."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm kiếm tin tức về OpenAI trên web giúp tôi"
+        },
+        {
+          "role": "user",
+          "content": "Viết giúp tôi một đoạn mã Python để kết nối API đó"
+        }
+      ],
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi chỉ hỗ trợ các tác vụ nghiên cứu và không thể giúp với mã hóa hoặc lập trình. Nếu bạn cần thông tin hoặc tài liệu liên quan đến OpenAI, hãy cho tôi biết!",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G10_multi_correction_topic",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correction",
+        "difficulty": "medium",
+        "what_it_tests": "Ghi đè chủ đề Nvidia bằng AMD ở lượt sau khi người dùng sửa đổi yêu cầu."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm kiếm tin tức về chủ đề Nvidia"
+        },
+        {
+          "role": "user",
+          "content": "Không, đổi sang tìm kiếm tin tức về AMD"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AMD",
+              "topic": "news"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "AMD",
+              "topic": "news"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AMD",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "AMD",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "AMD takes on Nvidia with its Helios AI rack scale system - TechCrunch",
+                "url": "https://techcrunch.com/2026/07/23/amd-takes-on-nvidia-with-its-helios-ai-rack-scale-system/",
+                "source": "techcrunch.com",
+                "summary": "# AMD takes on Nvidia with its Helios AI rack scale system. Chipmaker AMD is taking aim at competitor Nvidia with its latest hardware release: a rack-scale system designed to power computing needs of the world’s largest AI labs. At the company’s sold-out Advancing AI conference in San Francisco on Thursday, AMD Chair and CEO Dr. Lisa Su promoted the new AI rack system known as Helios — along with its growing list of customers, including Microsoft — as the company prepares to ship it later this year. Su also pitched the company’s newest chips that are designed to feed the compute-hungry dragon that is the AI industry. Su called Helios the tech industry’s “highest performance AI rack,” adding that it was “built to train and run the most demanding frontier models in the world at massive scale.” The system will be deployed by leading AI companies at gigawatt-scale, the company said.",
+                "score": 0.39410824
+              },
+              {
+                "title": "AMD to invest up to $5 billion in Anthropic; AI startup to buy up to 2 GW of chips - Reuters",
+                "url": "https://www.reuters.com/business/amd-invest-up-5-billion-anthropic-wsj-reports-2026-07-22/",
+                "source": "reuters.com",
+                "summary": "Exclusive news, data and analytics for financial market professionals Learn more about Refinitiv. ## Browse World. ## Browse Business. # AMD to invest up to $5 billion in Anthropic; AI startup to buy up to 2 GW of chips. REUTERS/Dado Ruvic/Illustration Purchase Licensing Rights, opens new tab. July 22 (Reuters) - Advanced Micro Devices (AMD.O), opens new tab said on Wednesday it would invest up to $5 billion ​in Anthropic and the artificial intelligence ‌startup would buy up to 2 gigawatts of AMD's latest-generation AI chips, beginning in the first ​half of 2027. AMD has been seeking ​to expand its foothold in the ⁠fast-growing AI chip market as developers look ​to diversify beyond Nvidia (NVDA.O), opens new tab, while Anthropic has ​been racing to secure computing capacity to meet growing demand for its AI services. *   Media Center, opens new tab. *   Reuters News Agency, opens new tab. *   Reuters and AI, opens new tab. *   #### World-Check, opens new tab.",
+                "score": 0.37600484
+              },
+              {
+                "title": "AMD, Cerebras Strike AI Chip Deals - Investor's Business Daily",
+                "url": "https://www.investors.com/news/technology/amd-stock-cerebras-rise-ai-chip-deals/",
+                "source": "investors.com",
+                "summary": "*   IBD 50 Stocks To Watch. *   How To Invest In Stocks. **Advanced Micro Devices** (AMD) and **Cerebras Systems** (CBRS) on Wednesday separately announced partnerships related to their AI chips. AMD stock and Cerebras stock rose on the news as semiconductor stocks overall advanced. AMD disclosed a strategic partnership with AI giant Anthropic, known for its Claude artificial intelligence tools. Is the federal government's clash with Anthropic a warning sign for the entire artificial intelligence ecosystem? On Monday, AMD announced that **Microsoft** (MSFT) will deploy the chipmaker's Helios systems to power frontier model AI inference for Microsoft, its AI customers and support Microsoft Azure AI services. The deal is an expansion of AMD's existing partnership with Microsoft. In afternoon trades on the stock market today, AMD stock rose more than 2% to 556.45. AMD stock is on three IBD stock lists: IBD 50, Big Cap 20 and Tech Leaders.",
+                "score": 0.35079992
+              },
+              {
+                "title": "AMD to invest up to $5 billion in Anthropic as part of computing power deal - CNBC",
+                "url": "https://www.cnbc.com/2026/07/22/amd-anthropic-ai-chip-investment.html",
+                "source": "cnbc.com",
+                "summary": "# AMD to invest up to $5 billion in Anthropic as part of computing power deal. * AMD announced a partnership with Anthropic and said it will invest up to $5 billion in the AI company. * As part of the deal, Anthropic will deploy 2 gigawatts of the AMD Instinct MI450 Series GPUs in AMD Helios rack-scale solutions. * Anthropic's agreement with AMD is the latest in a string of infrastructure deals the company has announced this year as it works to increase its computing capacity. Advanced Micro Devices on Wednesday announced a strategic partnership with Anthropic and said it will invest up to $5 billion in the artificial intelligence company \"in the future.\". As part of the deal, the chipmaker said Anthropic will deploy 2 gigawatts of its AMD Instinct MI450 Series graphics processing units, or GPUs, in AMD Helios rack-scale solutions.",
+                "score": 0.33613545
+              },
+              {
+                "title": "AMD introduces Helios system to challenge NVIDIA dominance - Zamin.uz",
+                "url": "https://zamin.uz/en/technology/214118-amd-introduces-helios-system-to-challenge-nvidia-dominance.html",
+                "source": "zamin.uz",
+                "summary": "# AMD introduces Helios system to challenge NVIDIA dominance. AMD, one of the world's leading semiconductor companies, has announced a new rack system called Helios designed for large AI laboratories and data centers. Unveiled at the Advancing AI conference in San Francisco, this device aims to directly challenge NVIDIA's market dominance. According to AMD CEO Lisa Su, Helios is currently the highest-performance AI system in the technology industry. This device is specifically designed to train and run the world's most complex and demanding AI models. However, according to The Register, the performance metrics of the Helios system surpass the Vera Rubin system in several parameters. This situation opens new opportunities for AMD in the AI infrastructure market. Speaking about the future of the AI chip market, Lisa Su emphasized that the market size in this sector is expected to reach $1.4 trillion by 2030. This, in turn, requires thousands of powerful GPUs. By the end of the decade, the AI accelerator market is expected to equal the size of the entire semiconductor market today.",
+                "score": 0.3296943
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
