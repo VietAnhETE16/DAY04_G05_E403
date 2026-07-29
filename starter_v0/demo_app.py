@@ -369,11 +369,38 @@ if page == "💬 Live Chat":
                 elif role == "assistant":
                     with st.chat_message("assistant", avatar="🤖"):
                         if tool_calls:
+                            st.markdown("##### 🛠️ Tool Executions")
                             for tc in tool_calls:
                                 name = tc.get("tool", "?")
                                 args = tc.get("args", {})
-                                args_str = ", ".join(f"`{k}`=`{json.dumps(v, ensure_ascii=False)}`" for k, v in args.items())
-                                st.markdown(f"🔧 **{name}**({args_str})")
+                                result = tc.get("result", {})
+                                
+                                # Check if error exists in the result
+                                is_err = False
+                                err_msg = ""
+                                if isinstance(result, dict):
+                                    if "error" in result and result.get("error"):
+                                        is_err = True
+                                        err_msg = f"{result.get('error')}: {result.get('message', '')}"
+                                    elif isinstance(result.get("result"), dict) and result.get("result", {}).get("error"):
+                                        is_err = True
+                                        res_err = result.get("result", {})
+                                        err_msg = f"{res_err.get('error')}: {res_err.get('message', '')}"
+                                
+                                status_emoji = "❌" if is_err else "✅"
+                                
+                                args_preview = ", ".join(f"{k}={json.dumps(v, ensure_ascii=False)}" for k, v in args.items())
+                                if len(args_preview) > 60:
+                                    args_preview = args_preview[:57] + "..."
+                                
+                                with st.expander(f"{status_emoji} **{name}**({args_preview})"):
+                                    st.markdown("**Arguments:**")
+                                    st.json(args)
+                                    if is_err:
+                                        st.markdown(f"**Error:** :red[{err_msg}]")
+                                    else:
+                                        st.markdown("**Result:**")
+                                        st.json(result)
                             st.markdown("---")
                         if content:
                             st.markdown(content)
@@ -422,7 +449,11 @@ if page == "💬 Live Chat":
                     # Build tool_calls for display
                     display_tools = []
                     for ev in tool_events:
-                        display_tools.append({"tool": ev.get("tool", "?"), "args": ev.get("args", {})})
+                        display_tools.append({
+                            "tool": ev.get("tool", "?"),
+                            "args": ev.get("args", {}),
+                            "result": ev.get("result", {}),
+                        })
 
                     st.session_state.chat_messages.append({
                         "role": "assistant",
