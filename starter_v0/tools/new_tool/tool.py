@@ -1,87 +1,84 @@
 from __future__ import annotations
 
 import re
-from collections import Counter
 from typing import Any
 
-from tools._shared import fold_text, terms
-
-
-ACTION_MARKERS = (
-    "todo",
-    "to do",
-    "action",
-    "follow up",
-    "next step",
-    "must",
-    "need",
-    "needs",
-    "should",
-    "can phai",
-    "nen",
-    "viec can lam",
-    "han chot",
-)
-
-
-def _sentences(text: str) -> list[str]:
-    normalized = re.sub(r"\s+", " ", text or "").strip()
-    if not normalized:
-        return []
-    parts = re.split(r"(?<=[.!?])\s+|[\r\n]+", normalized)
-    return [part.strip(" -\t") for part in parts if part.strip(" -\t")]
-
-
-def _score_sentence(sentence: str, query_terms: set[str], keyword_counts: Counter[str]) -> int:
-    sentence_terms = terms(sentence)
-    score = sum(keyword_counts.get(term, 0) for term in sentence_terms)
-    score += 3 * len(sentence_terms & query_terms)
-    if any(marker in fold_text(sentence) for marker in ACTION_MARKERS):
-        score += 2
-    return score
-
-
 def analyze_notes(text: str = "", focus: str = "", max_items: int = 5) -> dict[str, Any]:
-    try:
-        sentences = _sentences(text)
-        limit = max(1, int(max_items or 5))
-        query_terms = terms(focus)
-        keyword_counts = Counter(term for sentence in sentences for term in terms(sentence))
-
-        ranked = sorted(
-            enumerate(sentences),
-            key=lambda pair: (_score_sentence(pair[1], query_terms, keyword_counts), -pair[0]),
-            reverse=True,
-        )
-        summary = [sentence for _, sentence in ranked[:limit]]
-        summary.sort(key=lambda sentence: sentences.index(sentence))
-
-        actions = [
-            sentence
-            for sentence in sentences
-            if any(marker in fold_text(sentence) for marker in ACTION_MARKERS)
-        ][:limit]
-        keywords = [term for term, _ in keyword_counts.most_common(limit)]
-        markdown_parts = []
-        if summary:
-            markdown_parts.extend(["## Summary", *[f"- {sentence}" for sentence in summary]])
-        if actions:
-            markdown_parts.extend(["", "## Action items", *[f"- {sentence}" for sentence in actions]])
-        if keywords:
-            markdown_parts.extend(["", "## Keywords", ", ".join(keywords)])
-
+    """
+    Analyze local text or notes to extract:
+    - A summary (focusing on the specified 'focus' topic if provided)
+    - Action items (lines starting with todo, task, [ ], or containing action verbs/imperatives)
+    - Key terms / keywords
+    - Basic statistics (word count, line count)
+    """
+    if not text:
         return {
-            "tool": "analyze_notes",
-            "focus": focus,
-            "summary": summary,
-            "action_items": actions,
-            "keywords": keywords,
-            "markdown": "\n".join(markdown_parts).strip(),
-            "stats": {
-                "chars": len(text or ""),
-                "words": len(re.findall(r"\S+", text or "")),
-                "sentences": len(sentences),
-            },
+            "summary": "No text provided to analyze.",
+            "action_items": [],
+            "keywords": [],
+            "stats": {"words": 0, "lines": 0}
         }
-    except Exception as exc:
-        return {"tool": "analyze_notes", "error": type(exc).__name__, "message": str(exc)}
+        
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    words = text.split()
+    
+    # 1. Extract action items
+    action_items = []
+    for line in lines:
+        lower_line = line.lower()
+        is_action = False
+        action_text = ""
+        # Check standard indicators
+        if lower_line.startswith(("todo", "task", "- todo", "- task", "[ ]", "- [ ]")):
+            is_action = True
+            action_text = re.sub(r"^(\-\s*)?(todo|task|\[\s*\]|\-\s*\[\s*\])\s*[:\-]?\s*", "", line, flags=re.IGNORECASE).strip()
+        elif any(lower_line.startswith(p) for p in ["need to ", "should ", "must ", "please "]):
+            is_action = True
+            action_text = line
+            
+        if is_action and action_text:
+            action_items.append(action_text)
+            if len(action_items) >= max_items:
+                break
+                
+    # 2. Extract keywords (simple word frequency excluding common stopwords)
+    stopwords = {
+        "the", "and", "a", "of", "to", "in", "is", "you", "that", "it", "he", "was", "for", "on", "are", 
+        "as", "with", "his", "they", "i", "at", "be", "this", "have", "from", "or", "one", "had", "by", 
+        "word", "but", "not", "what", "all", "were", "we", "when", "your", "can", "said", "there", "use",
+        "an", "each", "which", "she", "do", "how", "their", "if", "will", "up", "other", "about", "out",
+        "many", "then", "them", "these", "so", "some", "her", "would", "make", "like", "him", "into",
+        "has", "look", "two", "more", "write", "go", "see", "number", "no", "way", "could", "people",
+        "my", "than", "first", "water", "been", "call", "who", "oil", "its", "now", "find", "long", "down",
+        "day", "did", "get", "come", "made", "may", "part"
+    }
+    word_freq = {}
+    for w in words:
+        clean_w = re.sub(r"[^\w]", "", w).lower()
+        if clean_w and clean_w not in stopwords and len(clean_w) > 3:
+            word_freq[clean_w] = word_freq.get(clean_w, 0) + 1
+            
+    sorted_keywords = sorted(word_freq.keys(), key=lambda k: word_freq[k], reverse=True)
+    keywords = sorted_keywords[:max_items]
+    
+    # 3. Create a summary
+    # If a focus is provided, filter lines containing the focus keyword
+    summary_lines = []
+    if focus:
+        focus_lower = focus.lower()
+        summary_lines = [line for line in lines if focus_lower in line.lower()]
+        
+    if not summary_lines:
+        summary_lines = lines[:3]  # fallback to first 3 lines
+        
+    summary = " ".join(summary_lines[:3])
+    
+    return {
+        "summary": summary,
+        "action_items": action_items,
+        "keywords": keywords,
+        "stats": {
+            "words": len(words),
+            "lines": len(lines)
+        }
+    }
