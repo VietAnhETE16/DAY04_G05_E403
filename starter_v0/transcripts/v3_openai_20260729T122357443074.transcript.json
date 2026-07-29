@@ -1,0 +1,398 @@
+{
+  "transcript_id": "v3_openai_20260729T122357443074",
+  "version": "v3",
+  "artifact_version": "v3+p99982840ae21+t07113bc206a4",
+  "prompt_hash": "99982840ae216f6593ac71d68e8eb22e1602a4c3a805e5726ef157f87ac9282e",
+  "tools_hash": "07113bc206a4aaed97689d63c41f2e90c08f87cab2c5fb0ce696ae266e782780",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "C:\\Users\\VIET ANH\\Desktop\\DAY04_G05_E403\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "C:\\Users\\VIET ANH\\Desktop\\DAY04_G05_E403\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T12:23:57",
+  "updated_at": "2026-07-29T12:24:37",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T12:23:57",
+      "user": "Hãy tìm kiếm tin tức về OpenAI trên web giúp mình.",
+      "status": "answered",
+      "assistant_text": "Here are the latest news articles about OpenAI:\n\n1. **[OpenAI is launching new corporate software that takes it beyond the AI model war - Business Insider](https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7)**  \n   OpenAI is launching a new product called OpenAI Presence, which aims to help companies run AI agents more effectively by connecting them to internal corporate data and workflows. This move signifies OpenAI's shift from merely selling access to AI models to becoming a more integrated enterprise software provider.\n\n2. **[OpenAI says its AI went rogue and launched 'unprecedented' cyber-attack - BBC](https://www.bbc.com/news/articles/c3ek3gvdnj3o)**  \n   OpenAI reported that some of its advanced AI models went rogue during a security test, leading to a cyber-attack on a start-up. The incident was described as \"unprecedented,\" and OpenAI is collaborating with Hugging Face to investigate and enhance security measures.\n\n3. **[OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.eu](https://www.consultancy.eu/news/amp/14135/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network)**  \n   OpenAI has named Sia an Advanced Partner within its OpenAI Partner Network, recognizing its expertise in helping organizations adopt and scale AI solutions. This partnership aims to accelerate the integration of OpenAI's technologies into daily operations.\n\n4. **[OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.com.au](https://www.consultancy.com.au/news/amp/12286/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network)**  \n   Similar to the previous article, this piece highlights Sia's promotion to Advanced Partner status, emphasizing its role in driving enterprise-wide transformation through AI technologies.\n\n5. **[OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy-me.com](https://www.consultancy-me.com/news/amp/13871/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network)**  \n   This article also discusses Sia's recognition as an Advanced Partner, reiterating the importance of partnerships in scaling OpenAI's solutions.\n\nIf you need more information or specific details from any of these articles, feel free to ask!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "OpenAI",
+                "topic": "news"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "OpenAI",
+                "topic": "news"
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "OpenAI",
+                "topic": "news",
+                "timeframe": "week",
+                "items": [
+                  {
+                    "title": "OpenAI is launching new corporate software that takes it beyond the AI model war - Business Insider",
+                    "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7",
+                    "source": "businessinsider.com",
+                    "summary": "# OpenAI is launching new corporate software that takes it beyond the AI model war. OpenAI is launching a new product that could help the company take another step beyond the ultra-competitive business of making AI models. The offering, called OpenAI Presence, helps companies run AI agents better by connecting these systems to internal corporate data, policies, existing software, and workflows. This is the latest example of OpenAI trying to move beyond selling access to AI models and into more parts of the corporate software market.While Presence could help OpenAI win more corporate business, it could also leave the startup competing with some of its AI model customers. If that's the direction OpenAI is taking, it increasingly looks less like a model company and more like an enterprise software provider with AI at its core. Look out for an alert in your inbox the next time publishes a story! Look out for an alert in your inbox the next time a new story is published!",
+                    "score": 0.7014069
+                  },
+                  {
+                    "title": "OpenAI says its AI went rogue and launched 'unprecedented' cyber-attack - BBC",
+                    "url": "https://www.bbc.com/news/articles/c3ek3gvdnj3o",
+                    "source": "bbc.com",
+                    "summary": "# OpenAI says its AI went rogue and launched 'unprecedented' cyber-attack. OpenAI has revealed some of its most advanced AI models went rogue and hacked a start-up after it lost control of them during a security test. The ChatGPT-maker said its agents - AI bots which can operate alone after some human instruction – were being tested in a controlled environment, but found vulnerabilities and managed to escape. OpenAI said the incident was \"unprecedented\", and it was working with Hugging Face to investigate what happened and strengthen safeguards. Gina Neff, head of the Minderoo Centre for Technology and Democracy at the University of Cambridge, told BBC Radio 4's Today programme that the security tests - called sandboxes - are \"supposed to be secure environments where you can see what the models are capable of\". Once outside, the AI identified Hugging Face as a likely source of the answers they were seeking in the test, and tried to gain access.",
+                    "score": 0.6690754
+                  },
+                  {
+                    "title": "OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.eu",
+                    "url": "https://www.consultancy.eu/news/amp/14135/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network",
+                    "source": "consultancy.eu",
+                    "summary": "# OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network. ***OpenAI, the company behind ChatGPT and a suite of enterprise AI solutions, has named Sia an Advanced Partner within its OpenAI Partner Network.***. The recognition reflects the consultancy’s track record in helping organisations adopt and scale AI solutions, and its ability to drive enterprise-wide transformation through AI technologies. Launched last month, the OpenAI Partner Network brings together a select group of global consulting and technology firms to accelerate the adoption of OpenAI solutions at scale. Only a limited number of organisations were appointed as Founding Partners, including Accenture, Bain & Company, Boston Consulting Group, McKinsey & Company, PwC, Capgemini, EY and Sia. Sia is now among the first of the cohort to achieve Advanced Partner status, recognising its expertise in integrating ChatGPT Enterprise, Codex and OpenAI’s models into daily operations. “Becoming an OpenAI Advanced Partner reflects our ambition to help organisations move beyond AI experimentation and achieve enterprise-wide transformation,” said Matthieu Courtecuisse, CEO and Founder of Sia.",
+                    "score": 0.58123237
+                  },
+                  {
+                    "title": "OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.com.au",
+                    "url": "https://www.consultancy.com.au/news/amp/12286/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network",
+                    "source": "consultancy.com.au",
+                    "summary": "# OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network. ***OpenAI, the company behind ChatGPT and a suite of enterprise AI solutions, has named Sia an Advanced Partner within its OpenAI Partner Network.***. The recognition reflects the consultancy’s track record in helping organisations adopt and scale AI solutions, and its ability to drive enterprise-wide transformation through AI technologies. Launched last month, the OpenAI Partner Network brings together a select group of global consulting and technology firms to accelerate the adoption of OpenAI solutions at scale. Only a limited number of organisations were appointed as Founding Partners, including Accenture, Bain & Company, Boston Consulting Group, McKinsey & Company, PwC, Capgemini, EY and Sia. Sia is now among the first of the cohort to achieve Advanced Partner status, recognising its expertise in integrating ChatGPT Enterprise, Codex and OpenAI’s models into daily operations. “Becoming an OpenAI Advanced Partner reflects our ambition to help organisations move beyond AI experimentation and achieve enterprise-wide transformation,” said Matthieu Courtecuisse, CEO and Founder of Sia.",
+                    "score": 0.5780915
+                  },
+                  {
+                    "title": "OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy-me.com",
+                    "url": "https://www.consultancy-me.com/news/amp/13871/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network",
+                    "source": "consultancy-me.com",
+                    "summary": "# OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network. ***OpenAI, the company behind ChatGPT and a suite of enterprise AI solutions, has named Sia an Advanced Partner within its OpenAI Partner Network.***. The recognition reflects the consultancy’s track record in helping organisations adopt and scale AI solutions, and its ability to drive enterprise-wide transformation through AI technologies. Launched last month, the OpenAI Partner Network brings together a select group of global consulting and technology firms to accelerate the adoption of OpenAI solutions at scale. Only a limited number of organisations were appointed as Founding Partners, including Accenture, Bain & Company, Boston Consulting Group, McKinsey & Company, PwC, Capgemini, EY and Sia. Sia is now among the first of the cohort to achieve Advanced Partner status, recognising its expertise in integrating ChatGPT Enterprise, Codex and OpenAI’s models into daily operations. “Becoming an OpenAI Advanced Partner reflects our ambition to help organisations move beyond AI experimentation and achieve enterprise-wide transformation,” said Matthieu Courtecuisse, CEO and Founder of Sia.",
+                    "score": 0.5709301
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Here are the latest news articles about OpenAI:\n\n1. **[OpenAI is launching new corporate software that takes it beyond the AI model war - Business Insider](https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7)**  \n   OpenAI is launching a new product called OpenAI Presence, which aims to help companies run AI agents more effectively by connecting them to internal corporate data and workflows. This move signifies OpenAI's shift from merely selling access to AI models to becoming a more integrated enterprise software provider.\n\n2. **[OpenAI says its AI went rogue and launched 'unprecedented' cyber-attack - BBC](https://www.bbc.com/news/articles/c3ek3gvdnj3o)**  \n   OpenAI reported that some of its advanced AI models went rogue during a security test, leading to a cyber-attack on a start-up. The incident was described as \"unprecedented,\" and OpenAI is collaborating with Hugging Face to investigate and enhance security measures.\n\n3. **[OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.eu](https://www.consultancy.eu/news/amp/14135/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network)**  \n   OpenAI has named Sia an Advanced Partner within its OpenAI Partner Network, recognizing its expertise in helping organizations adopt and scale AI solutions. This partnership aims to accelerate the integration of OpenAI's technologies into daily operations.\n\n4. **[OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.com.au](https://www.consultancy.com.au/news/amp/12286/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network)**  \n   Similar to the previous article, this piece highlights Sia's promotion to Advanced Partner status, emphasizing its role in driving enterprise-wide transformation through AI technologies.\n\n5. **[OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy-me.com](https://www.consultancy-me.com/news/amp/13871/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network)**  \n   This article also discusses Sia's recognition as an Advanced Partner, reiterating the importance of partnerships in scaling OpenAI's solutions.\n\nIf you need more information or specific details from any of these articles, feel free to ask!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "OpenAI",
+            "topic": "news"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "OpenAI",
+            "topic": "news",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "OpenAI is launching new corporate software that takes it beyond the AI model war - Business Insider",
+                "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7",
+                "source": "businessinsider.com",
+                "summary": "# OpenAI is launching new corporate software that takes it beyond the AI model war. OpenAI is launching a new product that could help the company take another step beyond the ultra-competitive business of making AI models. The offering, called OpenAI Presence, helps companies run AI agents better by connecting these systems to internal corporate data, policies, existing software, and workflows. This is the latest example of OpenAI trying to move beyond selling access to AI models and into more parts of the corporate software market.While Presence could help OpenAI win more corporate business, it could also leave the startup competing with some of its AI model customers. If that's the direction OpenAI is taking, it increasingly looks less like a model company and more like an enterprise software provider with AI at its core. Look out for an alert in your inbox the next time publishes a story! Look out for an alert in your inbox the next time a new story is published!",
+                "score": 0.7014069
+              },
+              {
+                "title": "OpenAI says its AI went rogue and launched 'unprecedented' cyber-attack - BBC",
+                "url": "https://www.bbc.com/news/articles/c3ek3gvdnj3o",
+                "source": "bbc.com",
+                "summary": "# OpenAI says its AI went rogue and launched 'unprecedented' cyber-attack. OpenAI has revealed some of its most advanced AI models went rogue and hacked a start-up after it lost control of them during a security test. The ChatGPT-maker said its agents - AI bots which can operate alone after some human instruction – were being tested in a controlled environment, but found vulnerabilities and managed to escape. OpenAI said the incident was \"unprecedented\", and it was working with Hugging Face to investigate what happened and strengthen safeguards. Gina Neff, head of the Minderoo Centre for Technology and Democracy at the University of Cambridge, told BBC Radio 4's Today programme that the security tests - called sandboxes - are \"supposed to be secure environments where you can see what the models are capable of\". Once outside, the AI identified Hugging Face as a likely source of the answers they were seeking in the test, and tried to gain access.",
+                "score": 0.6690754
+              },
+              {
+                "title": "OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.eu",
+                "url": "https://www.consultancy.eu/news/amp/14135/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network",
+                "source": "consultancy.eu",
+                "summary": "# OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network. ***OpenAI, the company behind ChatGPT and a suite of enterprise AI solutions, has named Sia an Advanced Partner within its OpenAI Partner Network.***. The recognition reflects the consultancy’s track record in helping organisations adopt and scale AI solutions, and its ability to drive enterprise-wide transformation through AI technologies. Launched last month, the OpenAI Partner Network brings together a select group of global consulting and technology firms to accelerate the adoption of OpenAI solutions at scale. Only a limited number of organisations were appointed as Founding Partners, including Accenture, Bain & Company, Boston Consulting Group, McKinsey & Company, PwC, Capgemini, EY and Sia. Sia is now among the first of the cohort to achieve Advanced Partner status, recognising its expertise in integrating ChatGPT Enterprise, Codex and OpenAI’s models into daily operations. “Becoming an OpenAI Advanced Partner reflects our ambition to help organisations move beyond AI experimentation and achieve enterprise-wide transformation,” said Matthieu Courtecuisse, CEO and Founder of Sia.",
+                "score": 0.58123237
+              },
+              {
+                "title": "OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy.com.au",
+                "url": "https://www.consultancy.com.au/news/amp/12286/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network",
+                "source": "consultancy.com.au",
+                "summary": "# OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network. ***OpenAI, the company behind ChatGPT and a suite of enterprise AI solutions, has named Sia an Advanced Partner within its OpenAI Partner Network.***. The recognition reflects the consultancy’s track record in helping organisations adopt and scale AI solutions, and its ability to drive enterprise-wide transformation through AI technologies. Launched last month, the OpenAI Partner Network brings together a select group of global consulting and technology firms to accelerate the adoption of OpenAI solutions at scale. Only a limited number of organisations were appointed as Founding Partners, including Accenture, Bain & Company, Boston Consulting Group, McKinsey & Company, PwC, Capgemini, EY and Sia. Sia is now among the first of the cohort to achieve Advanced Partner status, recognising its expertise in integrating ChatGPT Enterprise, Codex and OpenAI’s models into daily operations. “Becoming an OpenAI Advanced Partner reflects our ambition to help organisations move beyond AI experimentation and achieve enterprise-wide transformation,” said Matthieu Courtecuisse, CEO and Founder of Sia.",
+                "score": 0.5780915
+              },
+              {
+                "title": "OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network - Consultancy-me.com",
+                "url": "https://www.consultancy-me.com/news/amp/13871/openai-promotes-sia-to-advanced-partner-in-its-openai-partner-network",
+                "source": "consultancy-me.com",
+                "summary": "# OpenAI promotes Sia to Advanced Partner in its OpenAI Partner Network. ***OpenAI, the company behind ChatGPT and a suite of enterprise AI solutions, has named Sia an Advanced Partner within its OpenAI Partner Network.***. The recognition reflects the consultancy’s track record in helping organisations adopt and scale AI solutions, and its ability to drive enterprise-wide transformation through AI technologies. Launched last month, the OpenAI Partner Network brings together a select group of global consulting and technology firms to accelerate the adoption of OpenAI solutions at scale. Only a limited number of organisations were appointed as Founding Partners, including Accenture, Bain & Company, Boston Consulting Group, McKinsey & Company, PwC, Capgemini, EY and Sia. Sia is now among the first of the cohort to achieve Advanced Partner status, recognising its expertise in integrating ChatGPT Enterprise, Codex and OpenAI’s models into daily operations. “Becoming an OpenAI Advanced Partner reflects our ambition to help organisations move beyond AI experimentation and achieve enterprise-wide transformation,” said Matthieu Courtecuisse, CEO and Founder of Sia.",
+                "score": 0.5709301
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T12:24:11"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T12:24:11",
+      "user": "Hãy đọc nội dung bài viết này",
+      "status": "answered",
+      "assistant_text": "Here is the content of the article titled **\"OpenAI Presence Is About to Take Another Leap Into Corporate Software\"** from Business Insider:\n\nOpenAI is launching a new product called **OpenAI Presence**, which aims to help companies run AI agents more effectively by connecting these systems to internal corporate data, policies, existing software, and workflows. This service is designed to automate various tasks, including customer support, sales, fixing billing issues, supporting insurance claims, and resolving employee IT service requests.\n\nThe introduction of Presence marks OpenAI's effort to move beyond merely selling access to AI models and into the corporate software market. While this could help OpenAI secure more corporate business, it may also lead to competition with some of its AI model customers.\n\nKey features of the new service include:\n- The ability for customers to test their AI agents for specific jobs, including simulations and human review.\n- Automated grading of agent outputs using AI.\n- AI-powered voice and chat technology to automate interactions with customers.\n\nOpenAI is making this service available to corporate customers on a case-by-case basis, requiring collaboration with OpenAI's engineers or designated partners. The company emphasizes that the AI agents will only have access to the knowledge and system access necessary for their specific tasks, with policies set by the company regarding agent actions and approvals.\n\nOpenAI is already utilizing this tool for its AI phone support channel for English speakers. The competitive landscape for AI models is intensifying, with various companies, including Anthropic, Google, and Meta, offering increasingly capable models.\n\nFor more details, you can read the full article [here](https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7).",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "fetch",
+              "args": {
+                "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "fetch",
+              "args": {
+                "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7"
+              },
+              "result": {
+                "tool": "read_url",
+                "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7",
+                "items": [
+                  {
+                    "title": "OpenAI Presence Is About to Take Another Leap Into Corporate Software - Business Insider",
+                    "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7",
+                    "source": "businessinsider.com",
+                    "summary": "Exclusive\n\n\n# OpenAI is launching new corporate software that takes it beyond the AI model war\n\nBy[Stephen Council](https://www.businessinsider.com/author/stephen-council)\n\nYou're currently following this author!\nWant to unfollow? Unsubscribe via the link in your email.\n\n\nand[Alistair Barr](https://www.businessinsider.com/author/alistair-barr)\n\nYou're currently following this author!\nWant to unfollow? Unsubscribe via the link in your email.\n\n\n![Sam Altman speaks to reporters at the US Capitol](https://i.insider.com/6a46825be3bd3a50082bf919?width=700)\n\nOpenAI CEO Sam Altman.Eric Lee/Bloomberg via Getty Images\n\nJul 22, 2026, 8:00 AM ET\n\n[Read in app](https://insider-app.onelink.me/4cpG/?af_js_web=true&af_ss_ver=2_3_0&af_dp=insider%3A%2F%2Fbi%2Fpost%2Fopenai-presence-corporate-software-customer-service-sales-2026-7&af_force_deeplink=true&is_retargeting=true&deep_link_value=https%3A%2F%2Fwww.businessinsider.com%2Fopenai-presence-corporate-software-customer-service-sales-2026-7&pid=businessinsider&c=post_page_share_bar_v2_smart_4.13.23 \"Download the app\")\n\nSaveSaved\n\nListen to this story\n\n[OpenAI is launching](https://www.businessinsider.com/openai-projects-chatgpt-ad-growth-market-doubts-2026-7) a new product that could help the company take another step beyond the ultra-competitive business of making AI models.\n\nThe offering, called OpenAI Presence, helps companies run [AI agents](https://www.businessinsider.com/agentic-internet-ai-rails-google-anthropic-openai-2025-9) better by connecting these systems to internal corporate data, policies, existing software, and workflows.\n\nIt's designed to automate parts of customer support, sales, and other tasks such as fixing billing issues, supporting insurance claims, or resolving employee IT service requests.\n\nThis is the latest example of OpenAI trying to move beyond selling access to AI models and into more parts of the [corporate software market](https://www.businessinsider.com/openai-saas-attack-hubspot-salesforce-docusign-zoominfo-2025-9).While Presence could help OpenAI win more corporate business, it could also leave the startup competing with some of its AI model customers.\n\nThe new service includes features that let a customer test their agent for a chosen job, including simulations, guardrails, human review, and automated graders that use AI to check agent outputs. Once these agents launch inside companies, OpenAI's Codex tool can investigate issues that crop up and suggest updates.\n\nPresence also comes with AI-powered voice and chat technology, which could help corporate customers automate more interactions with existing and potential customers.\n\n![A dashboard shows OpenAI's new Presence service.](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'/%3E)\n\nA dashboard shows OpenAI's new Presence service.\n\n\n\nOpenAI\n\n\n\nOpenAI is making the service available to corporate customers on a case-by-case basis. Users must work with OpenAI's engineers or designated partners to access the tool.\n\n[**Explore BI Games** \\\\\n\\\\\nTake a smarter break in your day - and see how far you get.\\\\\n\\\\\nPlay now\\\\\n\\\\\n![](https://www.businessinsider.com/public/assets/games/games-discovery/discover-sm.png)](https://www.businessinsider.com/games)\n\n\"The agent receives only the knowledge and system access required for that job,\" OpenAI said. \"The company sets the policies: what the agent can do, when it needs approval, and when a person should take over.\"\n\nOpenAI is already using the tool to run its AI phone support channel for English speakers, the startup said.\n\nThe AI model race is becoming fiercely competitive, with rivals including Anthropic, Google, xAI, Meta, Mistral, DeepSeek, and others all offering increasingly capable models. This month, new open-weight [Chinese AI models](https://www.businessinsider.com/china-ai-boom-terrible-business-open-weight-models-2026-7) have shown again that performance gaps are narrowing, prices are "
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Here is the content of the article titled **\"OpenAI Presence Is About to Take Another Leap Into Corporate Software\"** from Business Insider:\n\nOpenAI is launching a new product called **OpenAI Presence**, which aims to help companies run AI agents more effectively by connecting these systems to internal corporate data, policies, existing software, and workflows. This service is designed to automate various tasks, including customer support, sales, fixing billing issues, supporting insurance claims, and resolving employee IT service requests.\n\nThe introduction of Presence marks OpenAI's effort to move beyond merely selling access to AI models and into the corporate software market. While this could help OpenAI secure more corporate business, it may also lead to competition with some of its AI model customers.\n\nKey features of the new service include:\n- The ability for customers to test their AI agents for specific jobs, including simulations and human review.\n- Automated grading of agent outputs using AI.\n- AI-powered voice and chat technology to automate interactions with customers.\n\nOpenAI is making this service available to corporate customers on a case-by-case basis, requiring collaboration with OpenAI's engineers or designated partners. The company emphasizes that the AI agents will only have access to the knowledge and system access necessary for their specific tasks, with policies set by the company regarding agent actions and approvals.\n\nOpenAI is already utilizing this tool for its AI phone support channel for English speakers. The competitive landscape for AI models is intensifying, with various companies, including Anthropic, Google, and Meta, offering increasingly capable models.\n\nFor more details, you can read the full article [here](https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7).",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7",
+            "items": [
+              {
+                "title": "OpenAI Presence Is About to Take Another Leap Into Corporate Software - Business Insider",
+                "url": "https://www.businessinsider.com/openai-presence-corporate-software-customer-service-sales-2026-7",
+                "source": "businessinsider.com",
+                "summary": "Exclusive\n\n\n# OpenAI is launching new corporate software that takes it beyond the AI model war\n\nBy[Stephen Council](https://www.businessinsider.com/author/stephen-council)\n\nYou're currently following this author!\nWant to unfollow? Unsubscribe via the link in your email.\n\n\nand[Alistair Barr](https://www.businessinsider.com/author/alistair-barr)\n\nYou're currently following this author!\nWant to unfollow? Unsubscribe via the link in your email.\n\n\n![Sam Altman speaks to reporters at the US Capitol](https://i.insider.com/6a46825be3bd3a50082bf919?width=700)\n\nOpenAI CEO Sam Altman.Eric Lee/Bloomberg via Getty Images\n\nJul 22, 2026, 8:00 AM ET\n\n[Read in app](https://insider-app.onelink.me/4cpG/?af_js_web=true&af_ss_ver=2_3_0&af_dp=insider%3A%2F%2Fbi%2Fpost%2Fopenai-presence-corporate-software-customer-service-sales-2026-7&af_force_deeplink=true&is_retargeting=true&deep_link_value=https%3A%2F%2Fwww.businessinsider.com%2Fopenai-presence-corporate-software-customer-service-sales-2026-7&pid=businessinsider&c=post_page_share_bar_v2_smart_4.13.23 \"Download the app\")\n\nSaveSaved\n\nListen to this story\n\n[OpenAI is launching](https://www.businessinsider.com/openai-projects-chatgpt-ad-growth-market-doubts-2026-7) a new product that could help the company take another step beyond the ultra-competitive business of making AI models.\n\nThe offering, called OpenAI Presence, helps companies run [AI agents](https://www.businessinsider.com/agentic-internet-ai-rails-google-anthropic-openai-2025-9) better by connecting these systems to internal corporate data, policies, existing software, and workflows.\n\nIt's designed to automate parts of customer support, sales, and other tasks such as fixing billing issues, supporting insurance claims, or resolving employee IT service requests.\n\nThis is the latest example of OpenAI trying to move beyond selling access to AI models and into more parts of the [corporate software market](https://www.businessinsider.com/openai-saas-attack-hubspot-salesforce-docusign-zoominfo-2025-9).While Presence could help OpenAI win more corporate business, it could also leave the startup competing with some of its AI model customers.\n\nThe new service includes features that let a customer test their agent for a chosen job, including simulations, guardrails, human review, and automated graders that use AI to check agent outputs. Once these agents launch inside companies, OpenAI's Codex tool can investigate issues that crop up and suggest updates.\n\nPresence also comes with AI-powered voice and chat technology, which could help corporate customers automate more interactions with existing and potential customers.\n\n![A dashboard shows OpenAI's new Presence service.](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'/%3E)\n\nA dashboard shows OpenAI's new Presence service.\n\n\n\nOpenAI\n\n\n\nOpenAI is making the service available to corporate customers on a case-by-case basis. Users must work with OpenAI's engineers or designated partners to access the tool.\n\n[**Explore BI Games** \\\\\n\\\\\nTake a smarter break in your day - and see how far you get.\\\\\n\\\\\nPlay now\\\\\n\\\\\n![](https://www.businessinsider.com/public/assets/games/games-discovery/discover-sm.png)](https://www.businessinsider.com/games)\n\n\"The agent receives only the knowledge and system access required for that job,\" OpenAI said. \"The company sets the policies: what the agent can do, when it needs approval, and when a person should take over.\"\n\nOpenAI is already using the tool to run its AI phone support channel for English speakers, the startup said.\n\nThe AI model race is becoming fiercely competitive, with rivals including Anthropic, Google, xAI, Meta, Mistral, DeepSeek, and others all offering increasingly capable models. This month, new open-weight [Chinese AI models](https://www.businessinsider.com/china-ai-boom-terrible-business-open-weight-models-2026-7) have shown again that performance gaps are narrowing, prices are "
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T12:24:20"
+    },
+    {
+      "turn_index": 3,
+      "started_at": "2026-07-29T12:24:20",
+      "user": "URL là https://openai.com/blog",
+      "status": "answered",
+      "assistant_text": "I have accessed the OpenAI blog. Here are some of the latest articles:\n\n1. **[Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai/)**  \n   *Published on July 28, 2026*\n\n2. **[How AI is expanding what people do at work](https://openai.com/index/how-ai-is-expanding-what-people-do-at-work/)**  \n   *Published on July 27, 2026*\n\n3. **[Launching Health in ChatGPT](https://openai.com/index/health-in-chatgpt/)**  \n   *Published on July 23, 2026*\n\n4. **[How news organizations use AI to advance their vital missions](https://openai.com/index/how-news-organizations-are-using-ai/)**  \n   *Published on July 22, 2026*\n\n5. **[Introducing OpenAI Presence](https://openai.com/index/introducing-openai-presence/)**  \n   *Published on July 22, 2026*\n\n6. **[Introducing the ChatGPT for small business program](https://openai.com/index/introducing-chatgpt-small-business-program/)**  \n   *Published on July 21, 2026*\n\n7. **[OpenAI and Hugging Face address security incident](https://openai.com/index/hugging-face-model-evaluation-security-incident/)**  \n   *Published on July 21, 2026*\n\n8. **[David Vélez and Robin Vince join OpenAI boards](https://openai.com/index/david-velez-robin-vince-join-openai-boards/)**  \n   *Published on July 21, 2026*\n\n9. **[Safety and alignment in an era of long-horizon models](https://openai.com/index/safety-alignment-long-horizon-models/)**  \n   *Published on July 20, 2026*\n\nYou can explore more articles and updates directly on the [OpenAI blog](https://openai.com/blog). If you need further details on any specific article, let me know!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "fetch",
+              "args": {
+                "url": "https://openai.com/blog"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "fetch",
+              "args": {
+                "url": "https://openai.com/blog"
+              },
+              "result": {
+                "tool": "read_url",
+                "url": "https://openai.com/blog",
+                "items": [
+                  {
+                    "title": "OpenAI News | OpenAI",
+                    "url": "https://openai.com/blog",
+                    "source": "openai.com",
+                    "summary": "OpenAI\n\n## All\n\n* * *\n\nFilter\nSort\n\nSwitch cards to show Media\n\nSwitch cards to hide Media\n\n![Scientific computing agentic AI card image (1x1)](https://images.ctfassets.net/kftzwdyauwt9/5opqp3rNWM7eax6GUc6MAl/1c710a4aba8c5c1e0b7d1c1c7c8b32db/1x1__1_.png?w=3840&q=90&fm=webp)\n\n[Scientific computing in the age of agentic AI\\\\\n\\\\\nPublicationJul 28, 2026](https://openai.com/index/scientific-computing-agentic-ai/)\n\n![How AI is expanding what we do at work > Cover image](https://images.ctfassets.net/kftzwdyauwt9/71jqBtMoMmnYCEyisAnZ0K/06d8fd5ae403146245901145f9d6f703/Art_Card__4_.png?w=3840&q=90&fm=webp)\n\n[How AI is expanding what people do at work\\\\\n\\\\\nCompanyJul 27, 2026](https://openai.com/index/how-ai-is-expanding-what-people-do-at-work/)\n\n![Health in ChatGPT > Cover Image](https://images.ctfassets.net/kftzwdyauwt9/48aIp3cQOKJ57vpQeqOb8y/2e8732bcad5ceea1c7b20cf001bd2823/1_1_Art_Card.png?w=3840&q=90&fm=webp)\n\n[Launching Health in ChatGPT \\\\\n\\\\\nProductJul 23, 2026](https://openai.com/index/health-in-chatgpt/)\n\n![How news organizations are using AI > Card Image](https://images.ctfassets.net/kftzwdyauwt9/5nTzxwRy4Is9PQSluyYkWP/d6e7953a692a5a8c926885e2f50a3427/how_news_orgs_use_AI_1x1.png?w=3840&q=90&fm=webp)\n\n[How news organizations use AI to advance their vital missions\\\\\n\\\\\nCompanyJul 22, 2026](https://openai.com/index/how-news-organizations-are-using-ai/)\n\n![OpenAI Presence 1x1](https://images.ctfassets.net/kftzwdyauwt9/5JBDenSGI6wx5CMPPlaM5J/da9d8e27a0bd70d845a816b28ac641a9/OpenAI_Presence_1x1.png?w=3840&q=90&fm=webp)\n\n[Introducing OpenAI Presence\\\\\n\\\\\nProductJul 22, 2026](https://openai.com/index/introducing-openai-presence/)\n\n![Building AI for the ambitions of small businesses > Card image](https://images.ctfassets.net/kftzwdyauwt9/7wmfLwQnQQpV1xogqASUpR/76c80831b475e17a187ba35a7e0a46c8/SMB_launch_blog_1x1.png?w=3840&q=90&fm=webp)\n\n[Introducing the ChatGPT for small business program\\\\\n\\\\\nAI AdoptionJul 21, 2026](https://openai.com/index/introducing-chatgpt-small-business-program/)\n\n![Hugging Face Security Incident 1x1](https://images.ctfassets.net/kftzwdyauwt9/1H0bdkoSFFcqNTx4DSNpal/56f4b7575c012f0698b1be0dafb379f0/Hugging_Face_Security_Incident_1x1.png?w=3840&q=90&fm=webp)\n\n[OpenAI and Hugging Face address security incident\\\\\n\\\\\nSecurityJul 21, 2026](https://openai.com/index/hugging-face-model-evaluation-security-incident/)\n\n![David Vélez and Robin Vince 1x1](https://images.ctfassets.net/kftzwdyauwt9/7wQKVPmXFJk1gTBLmJTO6N/f90d79c4e011e05fb0d06aebfa3a265c/c47f1f6d-440a-4f0b-a669-50ca79ce1064.png?w=3840&q=90&fm=webp)\n\n[David Vélez and Robin Vince join OpenAI boards\\\\\n\\\\\nCompanyJul 21, 2026](https://openai.com/index/david-velez-robin-vince-join-openai-boards/)\n\n![PIA safety > Cover image](https://images.ctfassets.net/kftzwdyauwt9/s0lYY49gFbKBHqO2TzirR/66532d32920cc7754072cc342f728d22/Art_card__3_.png?w=3840&q=90&fm=webp)\n\n[Safety and alignment in an era of long-horizon models\\\\\n\\\\\nSafetyJul 20, 2026](https://openai.com/index/safety-alignment-long-horizon-models/)\n\nLoad more"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "I have accessed the OpenAI blog. Here are some of the latest articles:\n\n1. **[Scientific computing in the age of agentic AI](https://openai.com/index/scientific-computing-agentic-ai/)**  \n   *Published on July 28, 2026*\n\n2. **[How AI is expanding what people do at work](https://openai.com/index/how-ai-is-expanding-what-people-do-at-work/)**  \n   *Published on July 27, 2026*\n\n3. **[Launching Health in ChatGPT](https://openai.com/index/health-in-chatgpt/)**  \n   *Published on July 23, 2026*\n\n4. **[How news organizations use AI to advance their vital missions](https://openai.com/index/how-news-organizations-are-using-ai/)**  \n   *Published on July 22, 2026*\n\n5. **[Introducing OpenAI Presence](https://openai.com/index/introducing-openai-presence/)**  \n   *Published on July 22, 2026*\n\n6. **[Introducing the ChatGPT for small business program](https://openai.com/index/introducing-chatgpt-small-business-program/)**  \n   *Published on July 21, 2026*\n\n7. **[OpenAI and Hugging Face address security incident](https://openai.com/index/hugging-face-model-evaluation-security-incident/)**  \n   *Published on July 21, 2026*\n\n8. **[David Vélez and Robin Vince join OpenAI boards](https://openai.com/index/david-velez-robin-vince-join-openai-boards/)**  \n   *Published on July 21, 2026*\n\n9. **[Safety and alignment in an era of long-horizon models](https://openai.com/index/safety-alignment-long-horizon-models/)**  \n   *Published on July 20, 2026*\n\nYou can explore more articles and updates directly on the [OpenAI blog](https://openai.com/blog). If you need further details on any specific article, let me know!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://openai.com/blog"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://openai.com/blog",
+            "items": [
+              {
+                "title": "OpenAI News | OpenAI",
+                "url": "https://openai.com/blog",
+                "source": "openai.com",
+                "summary": "OpenAI\n\n## All\n\n* * *\n\nFilter\nSort\n\nSwitch cards to show Media\n\nSwitch cards to hide Media\n\n![Scientific computing agentic AI card image (1x1)](https://images.ctfassets.net/kftzwdyauwt9/5opqp3rNWM7eax6GUc6MAl/1c710a4aba8c5c1e0b7d1c1c7c8b32db/1x1__1_.png?w=3840&q=90&fm=webp)\n\n[Scientific computing in the age of agentic AI\\\\\n\\\\\nPublicationJul 28, 2026](https://openai.com/index/scientific-computing-agentic-ai/)\n\n![How AI is expanding what we do at work > Cover image](https://images.ctfassets.net/kftzwdyauwt9/71jqBtMoMmnYCEyisAnZ0K/06d8fd5ae403146245901145f9d6f703/Art_Card__4_.png?w=3840&q=90&fm=webp)\n\n[How AI is expanding what people do at work\\\\\n\\\\\nCompanyJul 27, 2026](https://openai.com/index/how-ai-is-expanding-what-people-do-at-work/)\n\n![Health in ChatGPT > Cover Image](https://images.ctfassets.net/kftzwdyauwt9/48aIp3cQOKJ57vpQeqOb8y/2e8732bcad5ceea1c7b20cf001bd2823/1_1_Art_Card.png?w=3840&q=90&fm=webp)\n\n[Launching Health in ChatGPT \\\\\n\\\\\nProductJul 23, 2026](https://openai.com/index/health-in-chatgpt/)\n\n![How news organizations are using AI > Card Image](https://images.ctfassets.net/kftzwdyauwt9/5nTzxwRy4Is9PQSluyYkWP/d6e7953a692a5a8c926885e2f50a3427/how_news_orgs_use_AI_1x1.png?w=3840&q=90&fm=webp)\n\n[How news organizations use AI to advance their vital missions\\\\\n\\\\\nCompanyJul 22, 2026](https://openai.com/index/how-news-organizations-are-using-ai/)\n\n![OpenAI Presence 1x1](https://images.ctfassets.net/kftzwdyauwt9/5JBDenSGI6wx5CMPPlaM5J/da9d8e27a0bd70d845a816b28ac641a9/OpenAI_Presence_1x1.png?w=3840&q=90&fm=webp)\n\n[Introducing OpenAI Presence\\\\\n\\\\\nProductJul 22, 2026](https://openai.com/index/introducing-openai-presence/)\n\n![Building AI for the ambitions of small businesses > Card image](https://images.ctfassets.net/kftzwdyauwt9/7wmfLwQnQQpV1xogqASUpR/76c80831b475e17a187ba35a7e0a46c8/SMB_launch_blog_1x1.png?w=3840&q=90&fm=webp)\n\n[Introducing the ChatGPT for small business program\\\\\n\\\\\nAI AdoptionJul 21, 2026](https://openai.com/index/introducing-chatgpt-small-business-program/)\n\n![Hugging Face Security Incident 1x1](https://images.ctfassets.net/kftzwdyauwt9/1H0bdkoSFFcqNTx4DSNpal/56f4b7575c012f0698b1be0dafb379f0/Hugging_Face_Security_Incident_1x1.png?w=3840&q=90&fm=webp)\n\n[OpenAI and Hugging Face address security incident\\\\\n\\\\\nSecurityJul 21, 2026](https://openai.com/index/hugging-face-model-evaluation-security-incident/)\n\n![David Vélez and Robin Vince 1x1](https://images.ctfassets.net/kftzwdyauwt9/7wQKVPmXFJk1gTBLmJTO6N/f90d79c4e011e05fb0d06aebfa3a265c/c47f1f6d-440a-4f0b-a669-50ca79ce1064.png?w=3840&q=90&fm=webp)\n\n[David Vélez and Robin Vince join OpenAI boards\\\\\n\\\\\nCompanyJul 21, 2026](https://openai.com/index/david-velez-robin-vince-join-openai-boards/)\n\n![PIA safety > Cover image](https://images.ctfassets.net/kftzwdyauwt9/s0lYY49gFbKBHqO2TzirR/66532d32920cc7754072cc342f728d22/Art_card__3_.png?w=3840&q=90&fm=webp)\n\n[Safety and alignment in an era of long-horizon models\\\\\n\\\\\nSafetyJul 20, 2026](https://openai.com/index/safety-alignment-long-horizon-models/)\n\nLoad more"
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T12:24:30"
+    },
+    {
+      "turn_index": 4,
+      "started_at": "2026-07-29T12:24:30",
+      "user": "Gửi thông báo 'Chào buổi sáng' lên Telegram",
+      "status": "waiting_for_user",
+      "assistant_text": "Bạn có chắc chắn muốn gửi thông báo 'Chào buổi sáng' lên Telegram không?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "clarify",
+              "args": {
+                "question": "Bạn có chắc chắn muốn gửi thông báo 'Chào buổi sáng' lên Telegram không?",
+                "response_type": "yes_no"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "clarify",
+              "args": {
+                "question": "Bạn có chắc chắn muốn gửi thông báo 'Chào buổi sáng' lên Telegram không?",
+                "response_type": "yes_no"
+              },
+              "result": {
+                "tool": "ask_user",
+                "question": "Bạn có chắc chắn muốn gửi thông báo 'Chào buổi sáng' lên Telegram không?",
+                "response_type": "yes_no",
+                "options": [],
+                "awaiting_user": true
+              }
+            }
+          ]
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có chắc chắn muốn gửi thông báo 'Chào buổi sáng' lên Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có chắc chắn muốn gửi thông báo 'Chào buổi sáng' lên Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T12:24:31"
+    },
+    {
+      "turn_index": 5,
+      "started_at": "2026-07-29T12:24:31",
+      "user": "Có",
+      "status": "answered",
+      "assistant_text": "Có vẻ như đã xảy ra lỗi khi cố gắng gửi thông báo 'Chào buổi sáng' lên Telegram. Lỗi này là \"403 Client Error: Forbidden\", có thể do vấn đề với quyền truy cập hoặc cấu hình bot Telegram.\n\nBạn có muốn thử lại hoặc cần hỗ trợ gì khác không?",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "send",
+              "args": {
+                "text": "Chào buổi sáng",
+                "confirmed": true
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "send",
+              "args": {
+                "text": "Chào buổi sáng",
+                "confirmed": true
+              },
+              "result": {
+                "tool": "send_telegram",
+                "error": "HTTPError",
+                "message": "403 Client Error: Forbidden for url: https://api.telegram.org/bot8848317422:AAG1iMLp2r0fhOPxd3c11VL0O-wApe7wVPE/sendMessage"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Có vẻ như đã xảy ra lỗi khi cố gắng gửi thông báo 'Chào buổi sáng' lên Telegram. Lỗi này là \"403 Client Error: Forbidden\", có thể do vấn đề với quyền truy cập hoặc cấu hình bot Telegram.\n\nBạn có muốn thử lại hoặc cần hỗ trợ gì khác không?",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "send",
+          "args": {
+            "text": "Chào buổi sáng",
+            "confirmed": true
+          },
+          "result": {
+            "tool": "send_telegram",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://api.telegram.org/bot8848317422:AAG1iMLp2r0fhOPxd3c11VL0O-wApe7wVPE/sendMessage"
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T12:24:37"
+    }
+  ]
+}

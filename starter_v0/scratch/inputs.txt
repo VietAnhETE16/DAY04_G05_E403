@@ -1,0 +1,6 @@
+Hãy tìm kiếm tin tức về OpenAI trên web giúp mình.
+Hãy đọc nội dung bài viết này
+https://openai.com/blog
+Gửi thông báo 'Chào buổi sáng' lên Telegram
+Có
+/exit
