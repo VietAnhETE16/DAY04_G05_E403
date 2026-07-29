@@ -88,7 +88,36 @@ actual_tool_calls: [
 
 ## B3. Team Eval Cases
 
-*(Đang thiết kế 10 case trong data/eval_group.json)*
+| Case ID | What It Tests | Expected Tool/Behavior | Result |
+|---|---|---|---|
+| G01_single_notes_analysis | Phân tích văn bản ghi chú cục bộ bằng `new_tool` | `new_tool(text=..., max_items=3)` | PASS |
+| G02_single_notes_focus | Truyền tham số focus là 'AI' cho công cụ phân tích cục bộ | `new_tool(text=..., focus="AI")` | PASS |
+| G03_single_math_homework | Từ chối gọi tool cho câu hỏi toán học ngoài phạm vi | `no_tool` | PASS |
+| G04_single_missing_notes_text | Yêu cầu nhập URL khi bị thiếu ở yêu cầu fetch | `clarify(response_type="text")` | PASS |
+| G05_single_confirm_before_publish | Xác nhận yes_no trước khi gửi tin | `clarify(response_type="yes_no")` | PASS |
+| G06_multi_switch_source | Chuyển đổi nguồn tìm kiếm từ Twitter sang web và bỏ Twitter | `lookup(query="OpenAI", topic="news")` | PASS |
+| G07_multi_carryover_focus | Giữ lại text và focus từ lượt trước, cập nhật max_items | `new_tool(text=..., focus="tuyển dụng", max_items=3)` | PASS |
+| G08_multi_carryover_query | Mang query OpenAI sang lượt sau và giới hạn kết quả | `papers(query="OpenAI", max_results=3)` | PASS |
+| G09_multi_out_of_scope | Yêu cầu code ở lượt sau bị từ chối gọi tool | `no_tool` | PASS |
+| G10_multi_correction_topic | Đổi chủ đề từ Nvidia sang AMD | `lookup(query="AMD", topic="news")` | PASS |
+
+## B4. Live Chat Evidence
+
+| Turn | User Request | Tool Calls | Version Evidence | Outcome |
+|---|---|---|---|---|
+| Turn 1 | Hãy tìm kiếm tin tức về OpenAI trên web giúp mình. | `lookup({"query": "OpenAI", "topic": "news"})` | v3_openai_20260729T122357443074.transcript.json | answered |
+| Turn 2 | Hãy đọc nội dung bài viết này | `fetch({"url": "https://www.businessinsider.com/..."})` | v3_openai_20260729T122357443074.transcript.json | answered |
+| Turn 3 | URL là https://openai.com/blog | `fetch({"url": "https://openai.com/blog"})` | v3_openai_20260729T122357443074.transcript.json | answered |
+| Turn 4 | Gửi thông báo 'Chào buổi sáng' lên Telegram | `clarify({"question": "...", "response_type": "yes_no"})` | v3_openai_20260729T122357443074.transcript.json | waiting_for_user |
+| Turn 5 | Có | `send({"confirmed": true, "text": "Chào buổi sáng"})` | v3_openai_20260729T122357443074.transcript.json | answered |
+
+## B5. Bonus Evidence
+
+| Category | Evidence File | What Worked | Risk / Guardrail |
+|---|---|---|---|
+| Must-have: tool mới đầu tiên | `tools/new_tool/tool.py` | Phân tích local text và note trích xuất summary, action items, keywords, thống kê số chữ/dòng | Không có tác động ngoài hệ thống, an toàn tuyệt đối |
+| Optional built-in | `tools/papers/tool.py`, `tools/policy/tool.py` | Tra cứu tài liệu chính sách nội bộ và bài báo arXiv | Phụ thuộc vào kết nối mạng bên ngoài |
+| UI | `app.py` | Giao diện Streamlit hiển thị chat trực quan, hiển thị chi tiết lịch sử cuộc gọi tool (trace) qua từng round và thông tin version | Chạy local, cần Cloudflare Tunnel để chia sẻ ra ngoài |
 
 ## B6. Reflection
 
@@ -102,3 +131,4 @@ actual_tool_calls: [
   - `R12_confirm_before_send` khi model tự suy luận hỏi nội dung trước khi xin xác nhận.
 - **What would you improve next?**
   - Đồng bộ lại mô tả trong `tools.yaml` cho công cụ `clarify` để không xung đột với `system_prompt.md`.
+
