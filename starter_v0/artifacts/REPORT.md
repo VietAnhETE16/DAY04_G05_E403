@@ -4,11 +4,16 @@
 > - **PHẦN A — Giới thiệu agent**: ngắn gọn 1 trang để team khác hiểu nhanh agent có tool gì, làm được gì, thử bằng câu hỏi nào. Xong trước 11:30 để làm tài liệu phụ trợ khi demo.
 > - **PHẦN B — Chi tiết / Bằng chứng**: bảng đầy đủ (v0–v3, failure, eval, chat) dựa trên log thật. Có thể hoàn thiện sau buổi debate để nộp bài.
 
-## Team
+## Bảng Phân Công Công Việc (Nhóm 5 Thành Viên)
 
-- Team: TrongDung-01965
-- Members: (Do nhóm tự điền)
-- Provider/model: OpenRouter / gemini-2.5-flash
+| STT | Họ và tên | Mã học viên | Vai trò trong nhóm |
+|-----|-----------|-------------|--------------------|
+| 1   |  Mai Việt Anh  |     2A202601083      |      Thành viên            |
+| 2   |  Trần Tuấn Trung  |     2A202601769     |      Thành viên            |
+| 3   |  Nguyễn Trọng Dũng   |     2A202601965      |      Nhóm trưởng            |
+| 4   |  Vũ Quang Tùng  |     2A202601545      |      Thành viên           |
+| 5   |  Chu Thị Yến Khanh  |     2A202601739      |      Thành viên           |
+
 
 ---
 
